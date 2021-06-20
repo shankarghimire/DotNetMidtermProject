@@ -59,6 +59,7 @@ namespace TakeHomeMidterm
     {
         Chicken,
         Sushi,
-        Salad
+        Salad,
+        None
     }
 }
