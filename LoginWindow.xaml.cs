@@ -22,6 +22,7 @@ namespace TakeHomeMidterm
 
         private string userName = "Test";
         private string password="test";
+        private DataExchange de = new DataExchange();
 
         private List<Logins> loginList = new List<Logins>();
         private Dictionary<string, Logins> usersDictionary = new Dictionary<string, Logins>();
@@ -71,10 +72,18 @@ namespace TakeHomeMidterm
                 if(password == temp.Password)
                 {
                     MainWindow m = new MainWindow();
+                    DataExchange dataExchangeObj1 = new DataExchange();
+                    dataExchangeObj1.saveCurrentUser(temp);
+                    //de.currentUser.Id = temp.Id;
+                    //de.currentUser.Username = temp.Username;
+                    //de.currentUser.Password = temp.Password;
+                    //de.currentUser.SuperUser = temp.SuperUser;
+                    //MessageBox.Show(de.currentUser.Username);
                     m.Background = Brushes.Azure;
                     m.Title = "Home Page";
                     m.Show();
-                    this.Close();
+                    this.Hide();
+                    //this.Close();
                 }
                 else
                 {

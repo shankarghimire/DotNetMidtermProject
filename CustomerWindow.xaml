@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TakeHomeMidterm"
         mc:Ignorable="d"
-        Title="CustomerWindow" Height="450" Width="800" Loaded="Window_Loaded">
+        Title="CustomerWindow" Height="450" Width="800" Loaded="Window_Loaded" Initialized="Window_Initialized">
     <Grid>
-        <DockPanel Margin="0,10,264.6,389" Grid.ColumnSpan="2">
-            <Menu x:Name="mainMenu" Height="38" VerticalAlignment="Top" Width="787" HorizontalAlignment="Left" Margin="0,-10,0,-8">
+        <DockPanel Margin="0,10,-0.4,389">
+            <Menu x:Name="mainMenu" Height="38" VerticalAlignment="Top" Width="794" HorizontalAlignment="Left" Margin="0,-10,0,-7.2">
                 <MenuItem x:Name="mnuFile" Header="_File" Click="mnuFile_Click" HorizontalAlignment="Left" VerticalAlignment="Top" >
                     <MenuItem x:Name="mnuNew" Header="_New"/>
                     <MenuItem x:Name="mnuSave" Header="_Save"/>
@@ -29,13 +29,13 @@
             </Menu>
 
         </DockPanel>
-        <Grid Margin="0,36,-0.4,0">
-                   
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"></ColumnDefinition>
-            <ColumnDefinition Width="1*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0" Margin="10">
+        <Grid Margin="0,36,-0.4,49">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Margin="10">
                 <ListBox x:Name="lstCustomers" Height="257" Margin="0,0,-0.2,0"
                          ItemsSource="{Binding}" SelectionChanged="lstCustomers_SelectionChanged"/>
 
@@ -57,5 +57,35 @@
                 <Button x:Name="btnDelete" Content="Delete" Click="btnDelete_Click" Margin="5"></Button>
             </StackPanel>
         </Grid>
+        <StatusBar HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="100" />
+                </Grid.ColumnDefinitions>
+            </Grid>
+            <StatusBarItem Grid.Column="0">
+                <TextBlock Name="lblCursorPosition" />
+            </StatusBarItem>
+            <Separator Grid.Column="1" />
+            <StatusBarItem Grid.Column="2">
+                <Label x:Name="lblDate" Content="2021/06/20"></Label>
+            </StatusBarItem>
+            <Separator Grid.Column="3" />
+            <StatusBarItem Grid.Column="4">
+                <Label x:Name="lblUsername" Content="Username:"></Label>
+            </StatusBarItem>
+            <Separator Grid.Column="5" />
+            <StatusBarItem Grid.Column="6">
+                <Label x:Name="lblUserStatus" Content="Super User:"/>
+            </StatusBarItem>
+           
+        </StatusBar>
     </Grid>
 </Window>

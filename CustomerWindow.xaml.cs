@@ -25,11 +25,16 @@ namespace TakeHomeMidterm
         //{
 
         //}
-        private DataExchange de = new DataExchange();
+        private DataExchange deObj = new DataExchange();
+
+        private List<Customer> customerList = new List<Customer>();
+        //private Logins currentUser;
         public CustomerWindow()
         {
             InitializeComponent();
-            var custData = from cust in de.customerList
+            customerList = deObj.GetCustomerList();
+            //currentUser = DataExchange.currentUser;
+            var custData = from cust in customerList
                            select cust.Id + "\t" + cust.Name + "\t" + cust.Address + "\t" + cust.Email + "\t" + cust.Phone;
             
 
@@ -40,7 +45,7 @@ namespace TakeHomeMidterm
         {
             int i = lstCustomers.SelectedIndex;
             //MessageBox.Show(i.ToString());
-            var selectedCustomer = from cust in de.customerList
+            var selectedCustomer = from cust in customerList
                                    where cust.Id == (i + 101)
                                    select cust;
             //Customer temp = (Customer)selectedCustomer;
@@ -53,8 +58,7 @@ namespace TakeHomeMidterm
                 tbCustomerAddress.Text = c.Address;
                 tbCustomerEmail.Text = c.Email;
                 tbCustomerPhone.Text = c.Phone;
-                
-
+               
             }
         }
 
@@ -74,17 +78,26 @@ namespace TakeHomeMidterm
             //{
             //    MessageBox.Show(c.Name);
             //}
+            //DateTime now = DateTime.Now;
+            //lblDate.Content = now;
+            //lblUsername.Content = de.currentUser.Username;
+            //if(de.currentUser.SuperUser == 1)
+            //{
+            //    lblUserStatus.Content = "Super User";
+            //}
+            //else
+            //{
+            //    lblUserStatus.Content = "Normal User";
+            //}
+
+            //lblUserStatus.Content = "Super";
+              //  de.currentUser.SuperUser == 1 ? lblUserStatus.Content = "Super User" : lblUserStatus.Content = "Normal User";
+
+
         }
 
         private void btnAddNew_Click(object sender, RoutedEventArgs e)
         {
-            //tbCustomerId.Text = "";
-            //tbCustomerName.Text = "";
-            //tbCustomerAddress.Text = "";
-            //tbCustomerEmail.Text = "";
-            //tbCustomerPhone.Text = "";
-
-
             if(tbCustomerId.Text == "" || tbCustomerName.Text == "" || tbCustomerAddress.Text == "" ||tbCustomerEmail.Text == "" || tbCustomerPhone.Text == "")
             {
                 MessageBox.Show("All the fields are mandatory!", "Data Validation Error", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -96,8 +109,8 @@ namespace TakeHomeMidterm
                 string cAdr = tbCustomerAddress.Text;
                 string cEmail = tbCustomerEmail.Text;
                 string cPhone = tbCustomerPhone.Text;
-                de.customerList.Add(new Customer(cId, cName, cAdr, cEmail, cPhone ));
-                var custData = from cust in de.customerList
+                customerList.Add(new Customer(cId, cName, cAdr, cEmail, cPhone ));
+                var custData = from cust in customerList
                                select cust.Id + "\t" + cust.Name + "\t" + cust.Address + "\t" + cust.Email + "\t" + cust.Phone;
 
                 lstCustomers.DataContext = custData;
@@ -110,7 +123,7 @@ namespace TakeHomeMidterm
             try
             {
                 int cId = int.Parse(tbCustomerId.Text);
-                var customerToUpdate = de.customerList.Single(cust => cust.Id == cId);
+                var customerToUpdate = customerList.Single(cust => cust.Id == cId);
                 
                 string cName = tbCustomerName.Text;
                 string cAdr = tbCustomerAddress.Text;
@@ -122,7 +135,7 @@ namespace TakeHomeMidterm
                 customerToUpdate.Phone = cPhone;
 
                 //de.customerList.Remove(customerToRemove);
-                var custData = from cust in de.customerList
+                var custData = from cust in customerList
                                select cust.Id + "\t" + cust.Name + "\t" + cust.Address + "\t" + cust.Email + "\t" + cust.Phone;
 
                 lstCustomers.DataContext = custData;
@@ -130,6 +143,7 @@ namespace TakeHomeMidterm
             }
             catch(Exception ex)
             {
+                MessageBox.Show(ex.ToString(), "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
                 //result = false;
             }
 
@@ -140,12 +154,12 @@ namespace TakeHomeMidterm
             try
             {
                 int cId = int.Parse(tbCustomerId.Text);
-                var customerToDelete = de.customerList.Single(cust => cust.Id == cId);
+                var customerToDelete = customerList.Single(cust => cust.Id == cId);
 
-                de.customerList.Remove(customerToDelete);
+                customerList.Remove(customerToDelete);
 
                 //de.customerList.Remove(customerToRemove);
-                var custData = from cust in de.customerList
+                var custData = from cust in customerList
                                select cust.Id + "\t" + cust.Name + "\t" + cust.Address + "\t" + cust.Email + "\t" + cust.Phone;
 
                 lstCustomers.DataContext = custData;
@@ -153,9 +167,15 @@ namespace TakeHomeMidterm
             }
             catch (Exception ex)
             {
+                MessageBox.Show(ex.ToString(), "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
                 //result = false;
             }
 
+        }
+
+        private void Window_Initialized(object sender, EventArgs e)
+        {
+            ShowCurrentUser();
         }
         //public CustomerWindow( List<Customer>customerList)
         //{
@@ -166,5 +186,22 @@ namespace TakeHomeMidterm
         //{
 
         //}
+
+        private void ShowCurrentUser()
+        {
+            MessageBox.Show(DataExchange.currentUser.Username);
+            DateTime now = DateTime.Now;
+            lblDate.Content = now;
+            lblUsername.Content = "Username : " + DataExchange.currentUser.Username;
+            if (DataExchange.currentUser.SuperUser == 1)
+            {
+                lblUserStatus.Content = "User Status:" + "Super User";
+            }
+            else
+            {
+                lblUserStatus.Content = "User Status:" + "Normal User";
+            }
+        }
+    
     }
 }

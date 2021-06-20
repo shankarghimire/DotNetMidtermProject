@@ -44,6 +44,10 @@ namespace TakeHomeMidterm
             SuperUser = superUser;
         }
 
+        public Logins()
+        {
+
+        }
 
     }
     internal enum UserStatus

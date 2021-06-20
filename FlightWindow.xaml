@@ -5,8 +5,89 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TakeHomeMidterm"
         mc:Ignorable="d"
-        Title="FlightWindow" Height="450" Width="800">
+        Title="FlightWindow" Height="487.6" Width="800" Initialized="Window_Initialized">
     <Grid>
-        
+        <DockPanel Margin="0,10,-0.4,389">
+            <Menu x:Name="mainMenu" Height="38" VerticalAlignment="Top" Width="794" HorizontalAlignment="Left" Margin="0,-10,0,-7.2">
+                <MenuItem x:Name="mnuFile" Header="_File" Click="mnuFile_Click" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                    <MenuItem x:Name="mnuNew" Header="_New"/>
+                    <MenuItem x:Name="mnuSave" Header="_Save"/>
+                    <MenuItem x:Name="mnuQuit" Header="_Quit" Click="mnuQuit_Click"/>
+                </MenuItem>
+                <MenuItem x:Name="mnuEdit" Header="_Edit">
+                    <MenuItem x:Name="mnuInsert" Header="Insert"/>
+                    <MenuItem x:Name="mnuUpdate" Header="Update"/>
+                    <MenuItem x:Name="mnuDelete" Header="Delete"/>
+                </MenuItem>
+                <MenuItem x:Name="mnuHomePage" Header="Home_Page">
+                    <MenuItem x:Name="mnuViewCustomers" Header="View Customers"/>
+                    <MenuItem x:Name="mnuViewFlights" Header="View Flights"/>
+                    <MenuItem x:Name="mnuViewAirlines" Header="View Airlines"/>
+                    <MenuItem x:Name="mnuViewPassengers" Header="View Passengers"/>
+                </MenuItem>
+                <MenuItem x:Name="mnuHelp" Header="_Help"/>
+            </Menu>
+
+        </DockPanel>
+        <Grid Margin="0,36,-0.4,49">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Margin="10">
+                <ListBox x:Name="lstFlights" Height="257" Margin="0,0,-0.2,0"
+                         ItemsSource="{Binding}" SelectionChanged="lstFlights_SelectionChanged"/>
+
+            </StackPanel>
+            <StackPanel Grid.Column="1" Margin="10">
+                <Label Content="Flight Id"></Label>
+                <TextBox x:Name="tbFlightId" LostFocus="tbFlightId_LostFocus"></TextBox>
+                <Label Content="Airline Id"></Label>
+                <TextBox x:Name="tbAirlineId" LostFocus="tbAirlineId_LostFocus"></TextBox>
+                <Label Content="Departure City"></Label>
+                <TextBox x:Name="tbDepartureCity"></TextBox>
+                <Label Content="Destination City"></Label>
+                <TextBox x:Name="tbDestinationCity"></TextBox>
+                <Label Content="Departure Time"></Label>
+                <TextBox x:Name="tbDepartureTime"></TextBox>
+                <Label Content="Flight Time"></Label>
+                <TextBox x:Name="tbFlightTime"></TextBox>
+                <Separator></Separator>
+                <Button x:Name="btnAddNew" Content="Add New" Click="btnAddNew_Click" Margin="5"></Button>
+                <Button x:Name="btnUpdate" Content="Update" Click="btnUpdate_Click" Margin="5"></Button>
+                <Button x:Name="btnDelete" Content="Delete" Click="btnDelete_Click" Margin="5"></Button>
+            </StackPanel>
+        </Grid>
+        <StatusBar HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="100" />
+                </Grid.ColumnDefinitions>
+            </Grid>
+            <StatusBarItem Grid.Column="0">
+                <TextBlock Name="lblCursorPosition" />
+            </StatusBarItem>
+            <Separator Grid.Column="1" />
+            <StatusBarItem Grid.Column="2">
+                <Label x:Name="lblDate" Content="2021/06/20"></Label>
+            </StatusBarItem>
+            <Separator Grid.Column="3" />
+            <StatusBarItem Grid.Column="4">
+                <Label x:Name="lblUsername" Content="Username:"></Label>
+            </StatusBarItem>
+            <Separator Grid.Column="5" />
+            <StatusBarItem Grid.Column="6">
+                <Label x:Name="lblUserStatus" Content="Super User:"/>
+            </StatusBarItem>
+
+        </StatusBar>
     </Grid>
 </Window>

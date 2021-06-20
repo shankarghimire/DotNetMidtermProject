@@ -103,6 +103,38 @@ namespace TakeHomeMidterm
             pw.ShowDialog();
         }
 
+        private void Window_Initialized(object sender, EventArgs e)
+        {
+            //MessageBox.Show(DataExchange.currentUser.Username);
+            //DateTime now = DateTime.Now;
+            //lblDate.Content = now;
+            //lblUsername.Content = "Username : " + DataExchange.currentUser.Username;
+            //if (DataExchange.currentUser.SuperUser == 1)
+            //{
+            //    lblUserStatus.Content = "User Status:" + "Super User";
+            //}
+            //else
+            //{
+            //    lblUserStatus.Content = "User Status:" + "Normal User";
+            //}
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            //MessageBox.Show(DataExchange.currentUser.Username);
+            DateTime now = DateTime.Now;
+            lblDate.Content = now;
+            lblUsername.Content = "Username : " + DataExchange.currentUser.Username;
+            if (DataExchange.currentUser.SuperUser == 1)
+            {
+                lblUserStatus.Content = "User Status:" + "Super User";
+            }
+            else
+            {
+                lblUserStatus.Content = "User Status:" + "Normal User";
+            }
+        }
+
 
 
 

@@ -19,14 +19,17 @@ namespace TakeHomeMidterm
     /// </summary>
     public partial class AirlineWindow : Window
     {
-        private DataExchange de = new DataExchange();
+        private DataExchange deObj = new DataExchange();
+        //private List<Airline> airlineList = new List<Airline>();
+
+        private Queue<Airline> airlineQueue = new Queue<Airline>();
+
         public AirlineWindow()
         {
             InitializeComponent();
-            var airlineData = from airline in de.airlineList
-                           select airline.Id + "\t" + airline.Name + "\t" + airline.Airplane + "\t" + airline.SeatAvailable + "\t" + airline.MealAvailable;
-
-
+            airlineQueue = deObj.GetAirlineQueue();
+            var airlineData = from airline in airlineQueue
+                               select airline.Id + "\t" + airline.Name + "\t" + airline.Airplane + "\t" + airline.SeatAvailable + "\t" + airline.MealAvailable;
             lstAirlines.DataContext = airlineData;
 
 
@@ -44,24 +47,30 @@ namespace TakeHomeMidterm
 
         private void lstAirlines_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int i = lstAirlines.SelectedIndex;
+            int i = lstAirlines.SelectedIndex;        
             //MessageBox.Show(i.ToString());
-            var selectedAirline = from airline in de.airlineList
-                                   where airline.Id == (i + 1)
-                                   select airline;
-            //Customer temp = (Customer)selectedCustomer;
-            //MessageBox.Show(temp.Name);
-            foreach (var ap in selectedAirline)
+            if(i == 0)
             {
-                tbAirlineId.Text = ap.Id.ToString();
-                tbAirlineName.Text = ap.Name;
-                //MessageBox.Show(c.Name);
-                tbAirplane.Text = ap.Airplane;
-                tbAvailableSeats.Text = ap.SeatAvailable.ToString();
-                tbMealAvailable.Text = ap.MealAvailable.ToString();
-
-
+                var selectedAirline = from airline in airlineQueue
+                                      where airline.Id == (i + 1)
+                                      select airline;
+                //Customer temp = (Customer)selectedCustomer;
+                //MessageBox.Show(temp.Name);
+                foreach (var ap in selectedAirline)
+                {
+                    tbAirlineId.Text = ap.Id.ToString();
+                    tbAirlineName.Text = ap.Name;
+                    //MessageBox.Show(c.Name);
+                    tbAirplane.Text = ap.Airplane;
+                    tbAvailableSeats.Text = ap.SeatAvailable.ToString();
+                    tbMealAvailable.Text = ap.MealAvailable.ToString();
+                }
             }
+            else
+            {
+                MessageBox.Show("You can only load the top-Queue element on to the textbox.", "Queue Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+           
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
@@ -70,7 +79,7 @@ namespace TakeHomeMidterm
             try
             {
                 int aId = int.Parse(tbAirlineId.Text);
-                var airlineToUpdate = de.airlineList.Single(air => air.Id == aId);
+                var airlineToUpdate = airlineQueue.Single(air => air.Id == aId);
 
                 string airlineName = tbAirlineName.Text;
                 string airPlane = tbAirplane.Text;
@@ -99,14 +108,16 @@ namespace TakeHomeMidterm
                 airlineToUpdate.MealAvailable = aMealAvailable;
 
                 //de.customerList.Remove(customerToRemove);
-                var airlineData = from airline in de.airlineList
-                               select airline.Id + "\t" + airline.Name + "\t" + airline.Airplane + "\t" + airline.SeatAvailable + "\t" + airline.MealAvailable;
+                var airlineData = from airline in airlineQueue
+                                  select airline.Id + "\t" + airline.Name + "\t" + airline.Airplane + "\t" + airline.SeatAvailable + "\t" + airline.MealAvailable;
 
                 lstAirlines.DataContext = airlineData;
                 //result = true;
             }
             catch (Exception ex)
             {
+                MessageBox.Show(ex.ToString(),"Eror Message",MessageBoxButton.OK,MessageBoxImage.Error);
+                    
                 //result = false;
             }
         }
@@ -123,11 +134,29 @@ namespace TakeHomeMidterm
                 int aId = int.Parse(tbAirlineId.Text);
                 string aName = tbAirlineName.Text;
                 string  aAirplane= tbAirplane.Text;
-                string aSeatsAvailable = tbAvailableSeats.Text;
-                string aMealAvailable = tbMealAvailable.Text;
-                de.customerList.Add(new Customer(aId, aName, aAirplane, aSeatsAvailable, aMealAvailable));
-                var airlineData = from airline in de.airlineList
-                               select airline.Id + "\t" + airline.Name + "\t" + airline.Airplane + "\t" + airline.SeatAvailable + "\t" + airline.MealAvailable;
+                int aSeatsAvailable =int.Parse( tbAvailableSeats.Text);
+                string meal = tbMealAvailable.Text;
+                MealAvailable aMealAvailable;
+                switch (meal)
+                {
+                    case "Chicken":
+                        aMealAvailable = MealAvailable.Chicken;
+                        break;
+                    case "Sushi":
+                        aMealAvailable = MealAvailable.Sushi;
+                        break;
+                    case "Salad":
+                        aMealAvailable = MealAvailable.Salad;
+                        break;
+                    default:
+                        aMealAvailable = MealAvailable.None;
+                        break;
+
+                }
+
+                airlineQueue.Enqueue(new Airline(aId, aName, aAirplane, aSeatsAvailable, aMealAvailable));
+                var airlineData = from airline in airlineQueue
+                                  select airline.Id + "\t" + airline.Name + "\t" + airline.Airplane + "\t" + airline.SeatAvailable + "\t" + airline.MealAvailable;
 
                 lstAirlines.DataContext = airlineData;
             }
@@ -139,13 +168,13 @@ namespace TakeHomeMidterm
         {
             try
             {
-                int aId = int.Parse(tbAirlineId.Text);
-                var airlineToDelete = de.airlineList.Single(air => air.Id == aId);
+                //int aId = int.Parse(tbAirlineId.Text);
+                //var airlineToDelete = airlineQueue.Single(air => air.Id == aId);
 
-                de.airlineList.Remove(airlineToDelete);
+                airlineQueue.Dequeue();
 
                 //de.customerList.Remove(customerToRemove);
-                var airlineData = from airline in de.airlineList
+                var airlineData = from airline in airlineQueue
                                   select airline.Id + "\t" + airline.Name + "\t" + airline.Airplane + "\t" + airline.SeatAvailable + "\t" + airline.MealAvailable;
 
                 lstAirlines.DataContext = airlineData;
@@ -153,8 +182,31 @@ namespace TakeHomeMidterm
             }
             catch (Exception ex)
             {
+                MessageBox.Show(ex.ToString(), "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
                 //result = false;
             }
+        }
+
+
+        private void ShowCurrentUser()
+        {
+            //MessageBox.Show(DataExchange.currentUser.Username);
+            DateTime now = DateTime.Now;
+            lblDate.Content = now;
+            lblUsername.Content = "Username : " + DataExchange.currentUser.Username;
+            if (DataExchange.currentUser.SuperUser == 1)
+            {
+                lblUserStatus.Content = "User Status:" + "Super User";
+            }
+            else
+            {
+                lblUserStatus.Content = "User Status:" + "Normal User";
+            }
+        }
+
+        private void Window_Initialized(object sender, EventArgs e)
+        {
+            ShowCurrentUser();
         }
     }
 }
