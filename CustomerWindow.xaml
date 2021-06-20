@@ -30,8 +30,7 @@
 
         </DockPanel>
         <Grid Margin="0,36,-0.4,0">
-            
-        
+                   
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="1*"></ColumnDefinition>

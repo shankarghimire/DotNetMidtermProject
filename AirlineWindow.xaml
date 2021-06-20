@@ -29,6 +29,33 @@
             </Menu>
 
         </DockPanel>
+        <Grid Margin="0,36,-0.4,0">
 
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Margin="10">
+                <ListBox x:Name="lstAirlines" Height="257" Margin="0,0,-0.2,0"
+                         ItemsSource="{Binding}" SelectionChanged="lstAirlines_SelectionChanged" />
+
+            </StackPanel>
+            <StackPanel Grid.Column="1" Margin="10">
+                <Label Content="Airline Id"></Label>
+                <TextBox x:Name="tbAirlineId"></TextBox>
+                <Label Content=" Airline Name"></Label>
+                <TextBox x:Name="tbAirlineName"></TextBox>
+                <Label Content="Airplane Name"></Label>
+                <TextBox x:Name="tbAirplane"></TextBox>
+                <Label Content="Number of Seats Available"></Label>
+                <TextBox x:Name="tbAvailableSeats"></TextBox>
+                <Label Content="Meal Available"></Label>
+                <TextBox x:Name="tbMealAvailable"></TextBox>
+                <Separator></Separator>
+                <Button x:Name="btnAddNew" Content="Add New" Click="btnAddNew_Click" Margin="5"></Button>
+                <Button x:Name="btnUpdate" Content="Update" Click="btnUpdate_Click" Margin="5"></Button>
+                <Button x:Name="btnDelete" Content="Delete" Click="btnDelete_Click" Margin="5"></Button>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

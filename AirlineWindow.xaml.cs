@@ -19,9 +19,17 @@ namespace TakeHomeMidterm
     /// </summary>
     public partial class AirlineWindow : Window
     {
+        private DataExchange de = new DataExchange();
         public AirlineWindow()
         {
             InitializeComponent();
+            var airlineData = from airline in de.airlineList
+                           select airline.Id + "\t" + airline.Name + "\t" + airline.Airplane + "\t" + airline.SeatAvailable + "\t" + airline.MealAvailable;
+
+
+            lstAirlines.DataContext = airlineData;
+
+
         }
 
         private void mnuFile_Click(object sender, RoutedEventArgs e)
@@ -30,6 +38,43 @@ namespace TakeHomeMidterm
         }
 
         private void mnuQuit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void lstAirlines_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int i = lstAirlines.SelectedIndex;
+            //MessageBox.Show(i.ToString());
+            var selectedAirline = from airline in de.airlineList
+                                   where airline.Id == (i + 1)
+                                   select airline;
+            //Customer temp = (Customer)selectedCustomer;
+            //MessageBox.Show(temp.Name);
+            foreach (var ap in selectedAirline)
+            {
+                tbAirlineId.Text = ap.Id.ToString();
+                tbAirlineName.Text = ap.Name;
+                //MessageBox.Show(c.Name);
+                tbAirplane.Text = ap.Airplane;
+                tbAvailableSeats.Text = ap.SeatAvailable.ToString();
+                tbMealAvailable.Text = ap.MealAvailable.ToString();
+
+
+            }
+        }
+
+        private void btnUpdate_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnAddNew_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
 
         }

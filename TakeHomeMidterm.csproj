@@ -86,6 +86,7 @@
     <Compile Include="AboutUs.xaml.cs">
       <DependentUpon>AboutUs.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Airline.cs" />
     <Compile Include="AirlineWindow.xaml.cs">
       <DependentUpon>AirlineWindow.xaml</DependentUpon>
     </Compile>
@@ -98,6 +99,7 @@
       <DependentUpon>CustomerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataExchange.cs" />
+    <Compile Include="Flight.cs" />
     <Compile Include="FlightWindow.xaml.cs">
       <DependentUpon>FlightWindow.xaml</DependentUpon>
     </Compile>
