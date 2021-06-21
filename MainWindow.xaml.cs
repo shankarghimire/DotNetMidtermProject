@@ -91,7 +91,7 @@ namespace TakeHomeMidterm
         {
             AirlineWindow aw = new AirlineWindow();
             aw.Background = Brushes.AliceBlue;
-            aw.Title = "View Flights";
+            aw.Title = "View Airlines";
             aw.ShowDialog();
         }
 
@@ -99,7 +99,7 @@ namespace TakeHomeMidterm
         {
             PassengerWindow pw = new PassengerWindow();
             pw.Background = Brushes.AliceBlue;
-            pw.Title = "View Flights";
+            pw.Title = "View Passengers";
             pw.ShowDialog();
         }
 

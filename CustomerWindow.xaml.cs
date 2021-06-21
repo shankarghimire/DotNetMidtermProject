@@ -189,7 +189,7 @@ namespace TakeHomeMidterm
 
         private void ShowCurrentUser()
         {
-            MessageBox.Show(DataExchange.currentUser.Username);
+            //MessageBox.Show(DataExchange.currentUser.Username);
             DateTime now = DateTime.Now;
             lblDate.Content = now;
             lblUsername.Content = "Username : " + DataExchange.currentUser.Username;

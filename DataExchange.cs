@@ -43,11 +43,11 @@ namespace TakeHomeMidterm
 
 
             //add element to the Queue
-            airlineQueue.Enqueue(new Airline(1, "Canada Airways", "Boeing 777", 360, MealAvailable.Chicken));
-            airlineQueue.Enqueue(new Airline(2, "Quatar Airways", "Boeing 888", 500, MealAvailable.Salad));
-            airlineQueue.Enqueue(new Airline(3, "American Airways", "Airbus 777", 670, MealAvailable.Sushi));
-            airlineQueue.Enqueue(new Airline(4, "British Airways", "Boeing 999", 540, MealAvailable.Sushi));
-            airlineQueue.Enqueue(new Airline(5, "South China Airways", "Boeing 777", 260, MealAvailable.Chicken));
+            airlineQueue.Enqueue(new Airline(1, "Canada Airways", Airplane.Boeing777, 360, MealAvailable.Chicken));
+            airlineQueue.Enqueue(new Airline(2, "Quatar Airways", Airplane.Boeing777, 500, MealAvailable.Salad));
+            airlineQueue.Enqueue(new Airline(3, "American Airways", Airplane.Airbus320, 670, MealAvailable.Sushi));
+            airlineQueue.Enqueue(new Airline(4, "British Airways", Airplane.Airbus320, 540, MealAvailable.Sushi));
+            airlineQueue.Enqueue(new Airline(5, "South China Airways",Airplane.Other, 260, MealAvailable.Chicken));
 
 
             //Add customers into passengerStack
@@ -102,6 +102,7 @@ namespace TakeHomeMidterm
             }
             catch(Exception ex)
             {
+                
                 //MessageBox.Show(ex.ToString(), "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
                 result = false;
 

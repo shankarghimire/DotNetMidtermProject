@@ -10,7 +10,7 @@ namespace TakeHomeMidterm
     {
         private int id;
         private string name;
-        private string airplane;
+        private Airplane airplane;
         private int seatsAvailable;
         private MealAvailable mealAvailable;
 
@@ -26,7 +26,7 @@ namespace TakeHomeMidterm
             set { this.name = value; }
         }
 
-        public string Airplane
+        public Airplane Airplane
         {
             get { return airplane; }
             set { this.airplane = value; }
@@ -43,7 +43,7 @@ namespace TakeHomeMidterm
             set { this.mealAvailable = value; }
         }
 
-        public Airline(int id, string name, string airplance, int seatsAvailable, MealAvailable mealAvailable)
+        public Airline(int id, string name, Airplane airplance, int seatsAvailable, MealAvailable mealAvailable)
         {
             Id = id;
             Name = name;
@@ -60,6 +60,11 @@ namespace TakeHomeMidterm
         Chicken,
         Sushi,
         Salad,
-        None
+        Other
+    }
+
+    internal enum Airplane
+    {
+        Boeing777, Airbus320, Other
     }
 }

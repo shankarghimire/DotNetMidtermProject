@@ -29,11 +29,11 @@
             </Menu>
 
         </DockPanel>
-        <StackPanel Orientation="Horizontal" Margin="0,51,0,199">
-            <Button x:Name="btnViewCustomers" Content="View Customers" Width="190" Margin="0,0,0,-0.4" Click="btnViewCustomers_Click"/>
-            <Button x:Name="btnViewFlights" Content="View Flights" Width="169" Margin="0,0,0,-0.4" Click="btnViewFlights_Click"/>
-            <Button x:Name="btnViewAirlines" Content="View Airlines" Width="192" Margin="0,0,0,-0.4" Click="btnViewAirlines_Click"/>
-            <Button x:Name="btnViewPassengers" Content="View Passengers" Width="240" Margin="0,0,0,-0.4" Click="btnViewPassengers_Click"/>
+        <StackPanel Orientation="Horizontal" Margin="0,51,10,199">
+            <Button x:Name="btnViewCustomers" Content="View Customers" Width="190" Margin="5" Click="btnViewCustomers_Click"/>
+            <Button x:Name="btnViewFlights" Content="View Flights" Width="169" Margin="5" Click="btnViewFlights_Click"/>
+            <Button x:Name="btnViewAirlines" Content="View Airlines" Width="192" Margin="5" Click="btnViewAirlines_Click"/>
+            <Button x:Name="btnViewPassengers" Content="View Passengers" Width="240" Margin="5" Click="btnViewPassengers_Click"/>
 
         </StackPanel>
         <StatusBar HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
