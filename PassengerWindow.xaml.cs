@@ -19,7 +19,8 @@ namespace TakeHomeMidterm
     /// </summary>
     public partial class PassengerWindow : Window
     {
-        DataExchange deObj = new DataExchange();
+        //DataExchange deObj = new DataExchange();
+        private CustomAPI customAPIObj = new CustomAPI();
         private Stack<Passenger> passengerStack;
 
         private List<Customer> customerList = new List<Customer>();
@@ -28,11 +29,11 @@ namespace TakeHomeMidterm
         public PassengerWindow()
         {
             InitializeComponent();
+            
+            customerList = customAPIObj.GetCustomerList();
+            flightList = customAPIObj.GetFlightList();
 
-            customerList = deObj.GetCustomerList();
-            flightList = deObj.GetFlightList();
-
-            passengerStack = deObj.GetPassengerStack();
+            passengerStack = customAPIObj.GetPassengerStack();
 
 
             //List<Passenger> topPassenger = new List<Passenger>();
@@ -74,112 +75,118 @@ namespace TakeHomeMidterm
 
         private void btnAddNew_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
+            InsertPassengerRecord();
 
-                if (tbPassengerId.Text == "" || tbCustomerId.Text == "" || tbFlightId.Text == "" )
-                {
-                    MessageBox.Show("All the fields are mandatory!", "Data Validation Error", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                else
-                {
-                    int pId = int.Parse(tbPassengerId.Text);
-                    if (CheckPassengerId(pId))
-                    {
-                        MessageBox.Show("Duplicate Passenger Id is not allowed! Please, Enter the unique Passenger Id.", "Data Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        tbFlightId.Focus();
-                        return;
-                    }
+            //try
+            //{
 
-                    int cId = int.Parse(tbCustomerId.Text);
-                    if (!CheckCustomerId(cId))
-                    {
-                        MessageBox.Show("Invalid Customer Id!, Please, check the Customer Data!", "Data Error!", MessageBoxButton.OK, MessageBoxImage.Error);
-                        //tbAirlineId.Focus();
-                        return;
+            //    if (tbPassengerId.Text == "" || tbCustomerId.Text == "" || tbFlightId.Text == "" )
+            //    {
+            //        MessageBox.Show("All the fields are mandatory!", "Data Validation Error", MessageBoxButton.OK, MessageBoxImage.Information);
+            //    }
+            //    else
+            //    {
+            //        int pId = int.Parse(tbPassengerId.Text);
+            //        if (CheckPassengerId(pId))
+            //        {
+            //            MessageBox.Show("Duplicate Passenger Id is not allowed! Please, Enter the unique Passenger Id.", "Data Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            //            tbFlightId.Focus();
+            //            return;
+            //        }
 
-                    }
+            //        int cId = int.Parse(tbCustomerId.Text);
+            //        if (!CheckCustomerId(cId))
+            //        {
+            //            MessageBox.Show("Invalid Customer Id!, Please, check the Customer Data!", "Data Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+            //            //tbAirlineId.Focus();
+            //            return;
+
+            //        }
 
 
-                    int fId = int.Parse(tbFlightId.Text);
-                    if (!CheckFlightId(fId))
-                    {
-                        MessageBox.Show("Invalid Flight Id!, Please, check the Flight Data!", "Data Error!", MessageBoxButton.OK, MessageBoxImage.Error);
-                        //tbAirlineId.Focus();
-                        return;
+            //        int fId = int.Parse(tbFlightId.Text);
+            //        if (!CheckFlightId(fId))
+            //        {
+            //            MessageBox.Show("Invalid Flight Id!, Please, check the Flight Data!", "Data Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+            //            //tbAirlineId.Focus();
+            //            return;
 
-                    }
+            //        }
                    
                  
-                    passengerStack.Push(new Passenger(pId, cId, fId));
-                    var passengerData = from passenger in passengerStack
-                                     select passenger.Id + "\t" + passenger.CustomerId + "\t" + passenger.FlightId;
+            //        passengerStack.Push(new Passenger(pId, cId, fId));
+            //        var passengerData = from passenger in passengerStack
+            //                         select passenger.Id + "\t" + passenger.CustomerId + "\t" + passenger.FlightId;
 
-                    lstPassengers.DataContext = passengerData;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            //        lstPassengers.DataContext = passengerData;
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.ToString(), "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            //}
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                int pId = int.Parse(tbPassengerId.Text);
-                var passengerToUpdate = passengerStack.Single(passenger => passenger.Id == pId);
+            UpdatePassengerRecord();
 
-                int customerId = int.Parse(tbCustomerId.Text);
-                int flightId = int.Parse(tbFlightId.Text);
+            //try
+            //{
+            //    int pId = int.Parse(tbPassengerId.Text);
+            //    var passengerToUpdate = passengerStack.Single(passenger => passenger.Id == pId);
 
-                passengerToUpdate.CustomerId = customerId;
-                passengerToUpdate.FlightId = flightId;
+            //    int customerId = int.Parse(tbCustomerId.Text);
+            //    int flightId = int.Parse(tbFlightId.Text);
 
-                var passengerData = from passenger in passengerStack
-                                    select passenger.Id + "\t" + passenger.CustomerId + "\t" + passenger.FlightId;
+            //    passengerToUpdate.CustomerId = customerId;
+            //    passengerToUpdate.FlightId = flightId;
 
-                lstPassengers.DataContext = passengerData;
+            //    var passengerData = from passenger in passengerStack
+            //                        select passenger.Id + "\t" + passenger.CustomerId + "\t" + passenger.FlightId;
+
+            //    lstPassengers.DataContext = passengerData;
 
 
-                //result = true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
-                //result = false;
-            }
+            //    //result = true;
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.ToString(), "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    //result = false;
+            //}
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                //int fId = int.Parse(tbFlightId.Text);
-                //var flightToDelete = flightList.Single(flight => flight.Id == fId);
-                //flightList.Remove(flightToDelete);
-                passengerStack.Pop();
-                var passengerData = from passenger in passengerStack
-                                    select passenger.Id + "\t" + passenger.CustomerId + "\t" + passenger.FlightId;
+            DeletePassengerRecord();
+
+            //try
+            //{
+            //    //int fId = int.Parse(tbFlightId.Text);
+            //    //var flightToDelete = flightList.Single(flight => flight.Id == fId);
+            //    //flightList.Remove(flightToDelete);
+            //    passengerStack.Pop();
+            //    var passengerData = from passenger in passengerStack
+            //                        select passenger.Id + "\t" + passenger.CustomerId + "\t" + passenger.FlightId;
 
 
-                lstPassengers.DataContext = passengerData;
-                tbPassengerId.Text = "";
-                tbCustomerId.Text = "";
-                tbFlightId.Text = "";
+            //    lstPassengers.DataContext = passengerData;
+            //    tbPassengerId.Text = "";
+            //    tbCustomerId.Text = "";
+            //    tbFlightId.Text = "";
 
-                //var flightData = from flight in flightList
-                //                 select flight.Id + "\t" + flight.AirlineId + "\t" + flight.DepartureCity + "\t" + flight.DestincationCity + "\t" + flight.DepartureDate + "\t" + flight.FlightTime;
+            //    //var flightData = from flight in flightList
+            //    //                 select flight.Id + "\t" + flight.AirlineId + "\t" + flight.DepartureCity + "\t" + flight.DestincationCity + "\t" + flight.DepartureDate + "\t" + flight.FlightTime;
 
-                //lstFlights.DataContext = flightData;
-                //result = true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
-                //result = false;
-            }
+            //    //lstFlights.DataContext = flightData;
+            //    //result = true;
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.ToString(), "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    //result = false;
+            //}
         }
 
         private void mnuQuit_Click(object sender, RoutedEventArgs e)
@@ -238,6 +245,149 @@ namespace TakeHomeMidterm
                 }
             }
             return result;
+        }
+
+        private void ctxMenuInsert_Click(object sender, RoutedEventArgs e)
+        {
+            InsertPassengerRecord();
+        }
+
+        private void ctxMenuUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            UpdatePassengerRecord();
+        }
+
+        private void ctxMenuDelete_Click(object sender, RoutedEventArgs e)
+        {
+            DeletePassengerRecord();
+        }
+
+        private void InsertPassengerRecord()
+        {
+
+            try
+            {
+
+                if (tbPassengerId.Text == "" || tbCustomerId.Text == "" || tbFlightId.Text == "")
+                {
+                    MessageBox.Show("All the fields are mandatory!", "Data Validation Error", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    int pId = int.Parse(tbPassengerId.Text);
+                    if (CheckPassengerId(pId))
+                    {
+                        MessageBox.Show("Duplicate Passenger Id is not allowed! Please, Enter the unique Passenger Id.", "Data Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        tbFlightId.Focus();
+                        return;
+                    }
+
+                    int cId = int.Parse(tbCustomerId.Text);
+                    if (!CheckCustomerId(cId))
+                    {
+                        MessageBox.Show("Invalid Customer Id!, Please, check the Customer Data!", "Data Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+                        //tbAirlineId.Focus();
+                        return;
+
+                    }
+
+
+                    int fId = int.Parse(tbFlightId.Text);
+                    if (!CheckFlightId(fId))
+                    {
+                        MessageBox.Show("Invalid Flight Id!, Please, check the Flight Data!", "Data Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+                        //tbAirlineId.Focus();
+                        return;
+
+                    }
+
+
+                    passengerStack.Push(new Passenger(pId, cId, fId));
+                    var passengerData = from passenger in passengerStack
+                                        select passenger.Id + "\t" + passenger.CustomerId + "\t" + passenger.FlightId;
+
+                    lstPassengers.DataContext = passengerData;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void UpdatePassengerRecord()
+        {
+
+            try
+            {
+                int pId = int.Parse(tbPassengerId.Text);
+                var passengerToUpdate = passengerStack.Single(passenger => passenger.Id == pId);
+
+                int customerId = int.Parse(tbCustomerId.Text);
+                int flightId = int.Parse(tbFlightId.Text);
+
+                passengerToUpdate.CustomerId = customerId;
+                passengerToUpdate.FlightId = flightId;
+
+                var passengerData = from passenger in passengerStack
+                                    select passenger.Id + "\t" + passenger.CustomerId + "\t" + passenger.FlightId;
+
+                lstPassengers.DataContext = passengerData;
+
+
+                //result = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+                //result = false;
+            }
+        }
+
+        private void DeletePassengerRecord()
+        {
+
+            try
+            {
+                //int fId = int.Parse(tbFlightId.Text);
+                //var flightToDelete = flightList.Single(flight => flight.Id == fId);
+                //flightList.Remove(flightToDelete);
+                passengerStack.Pop();
+                var passengerData = from passenger in passengerStack
+                                    select passenger.Id + "\t" + passenger.CustomerId + "\t" + passenger.FlightId;
+
+
+                lstPassengers.DataContext = passengerData;
+                tbPassengerId.Text = "";
+                tbCustomerId.Text = "";
+                tbFlightId.Text = "";
+
+                //var flightData = from flight in flightList
+                //                 select flight.Id + "\t" + flight.AirlineId + "\t" + flight.DepartureCity + "\t" + flight.DestincationCity + "\t" + flight.DepartureDate + "\t" + flight.FlightTime;
+
+                //lstFlights.DataContext = flightData;
+                //result = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+                //result = false;
+            }
+        }
+
+        private void mnuInsert_Click(object sender, RoutedEventArgs e)
+        {
+            InsertPassengerRecord();
+        }
+
+        private void mnuUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            UpdatePassengerRecord();
+        }
+
+        private void mnuDelete_Click(object sender, RoutedEventArgs e)
+        {
+            DeletePassengerRecord();
         }
     }
 }

@@ -6,6 +6,15 @@
         xmlns:local="clr-namespace:TakeHomeMidterm"
         mc:Ignorable="d"
         Title="CustomerWindow" Height="450" Width="800" Loaded="Window_Loaded" Initialized="Window_Initialized">
+
+    <Window.ContextMenu>
+        <ContextMenu>
+            <MenuItem x:Name="ctxMenuInsert" Header="_Insert" Click="ctxMenuInsert_Click"/>
+            <MenuItem x:Name="ctxMenuUpdate" Header="_Update" Click="ctxMenuUpdate_Click"/>
+            <MenuItem x:Name="ctxMenuDelete" Header="_Delete" Click="ctxMenuDelete_Click"/>
+        </ContextMenu>
+    </Window.ContextMenu>
+    
     <Grid>
         <DockPanel Margin="0,10,-0.4,389">
             <Menu x:Name="mainMenu" Height="38" VerticalAlignment="Top" Width="794" HorizontalAlignment="Left" Margin="0,-10,0,-7.2">
@@ -15,9 +24,9 @@
                     <MenuItem x:Name="mnuQuit" Header="_Quit" Click="mnuQuit_Click"/>
                 </MenuItem>
                 <MenuItem x:Name="mnuEdit" Header="_Edit">
-                    <MenuItem x:Name="mnuInsert" Header="Insert"/>
-                    <MenuItem x:Name="mnuUpdate" Header="Update"/>
-                    <MenuItem x:Name="mnuDelete" Header="Delete"/>
+                    <MenuItem x:Name="mnuInsert" Header="Insert" Click="mnuInsert_Click" />
+                    <MenuItem x:Name="mnuUpdate" Header="Update" Click="mnuUpdate_Click" />
+                    <MenuItem x:Name="mnuDelete" Header="Delete" Click="mnuDelete_Click" />
                 </MenuItem>
                 <MenuItem x:Name="mnuHomePage" Header="Home_Page">
                     <MenuItem x:Name="mnuViewCustomers" Header="View Customers"/>

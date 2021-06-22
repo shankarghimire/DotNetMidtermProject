@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:TakeHomeMidterm"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Initialized="Window_Initialized" Loaded="Window_Loaded">
-    <Grid Margin="0,85,-0.4,0">
-        <DockPanel Margin="0,-80,0,389">
-            <Menu x:Name="mainMenu" Height="38" VerticalAlignment="Top" Width="787" HorizontalAlignment="Left" Margin="0,-10,0,-8">
-                <MenuItem x:Name="mnuFile" Header="_File" Click="mnuFile_Click" HorizontalAlignment="Left" VerticalAlignment="Top" >
+    <Grid Margin="0,91,-0.4,0" Background="#33ffcc">
+        <DockPanel Margin="0,-75,0,375">
+            <Menu x:Name="mainMenu"  VerticalAlignment="Top"  Foreground="Black" FontWeight="Bold" FontSize="16" Height="30" Width="787" HorizontalAlignment="Left" Margin="0,-10,0,8">
+                <MenuItem x:Name="mnuFile" Header="_File" Click="mnuFile_Click" HorizontalAlignment="Left" VerticalAlignment="Top"   >
                     <MenuItem x:Name="mnuNew" Header="_New"/>
                     <MenuItem x:Name="mnuSave" Header="_Save"/>
                     <MenuItem x:Name="mnuQuit" Header="_Quit" Click="mnuQuit_Click"/>
