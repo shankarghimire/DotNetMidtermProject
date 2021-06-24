@@ -52,6 +52,7 @@ namespace TakeHomeMidterm
                 System.Environment.Exit(0);
             }
             
+            
         }
 
         private void mnuFile_Click(object sender, RoutedEventArgs e)
@@ -59,27 +60,32 @@ namespace TakeHomeMidterm
 
         }
 
-        private void mnuHelp_Click(object sender, RoutedEventArgs e)
-        {
-            AboutUs a = new AboutUs();
-            a.Background = Brushes.AliceBlue;
-            a.Title = "About Us";
-            a.ShowDialog();
-
-        }
+       
 
         private void btnViewCustomers_Click(object sender, RoutedEventArgs e)
         {
-            CustomerWindow cw = new CustomerWindow();
-            
-            
-            cw.Background = Brushes.AliceBlue;
-            cw.Title = "View Customers";
-            cw.ShowDialog();
+            ShowViewCustomerWindow();
+            //CustomerWindow cw = new CustomerWindow();                    
+            //cw.Background = Brushes.AliceBlue;
+            //cw.Title = "View Customers";
+            //cw.ShowDialog();
             //this.WindowState = WindowState.Minimized;
         }
 
+        private void ShowViewCustomerWindow()
+        {
+            CustomerWindow cw = new CustomerWindow();
+            cw.Background = Brushes.AliceBlue;
+            cw.Title = "View Customers";
+            cw.ShowDialog();
+        }
+
         private void btnViewFlights_Click(object sender, RoutedEventArgs e)
+        {
+            ShowViewFlightWindow();
+        }
+
+        private void ShowViewFlightWindow()
         {
             FlightWindow fw = new FlightWindow();
             fw.Background = Brushes.AliceBlue;
@@ -89,20 +95,27 @@ namespace TakeHomeMidterm
 
         private void btnViewAirlines_Click(object sender, RoutedEventArgs e)
         {
+            ShowViewAirlineWindow();
+        }
+
+        private void ShowViewAirlineWindow()
+        {
             AirlineWindow aw = new AirlineWindow();
             aw.Background = Brushes.AliceBlue;
             aw.Title = "View Airlines";
             aw.ShowDialog();
         }
-
         private void btnViewPassengers_Click(object sender, RoutedEventArgs e)
+        {
+            ShowViewPassengerWindow();
+        }
+        private void ShowViewPassengerWindow()
         {
             PassengerWindow pw = new PassengerWindow();
             pw.Background = Brushes.AliceBlue;
             pw.Title = "View Passengers";
             pw.ShowDialog();
         }
-
         private void Window_Initialized(object sender, EventArgs e)
         {
             //MessageBox.Show(DataExchange.currentUser.Username);
@@ -125,7 +138,7 @@ namespace TakeHomeMidterm
             DateTime now = DateTime.Now;
             lblDate.Content = now;
             lblUsername.Content = "Username : " + DataExchange.currentUser.Username;
-            if (DataExchange.currentUser.SuperUser == 1)
+            if (CustomAPI.currentUser.UserStatus == UserStatus.SuperUser)
             {
                 lblUserStatus.Content = "User Status:" + "Super User";
             }
@@ -134,6 +147,63 @@ namespace TakeHomeMidterm
                 lblUserStatus.Content = "User Status:" + "Normal User";
             }
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var result = MessageBox.Show("Are you sure to quit the program?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                //this.Close();
+                System.Environment.Exit(0);
+            }
+            else
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void mnuHelp_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void mnuHelp_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                AboutUs aboutUs = new AboutUs();
+                aboutUs.Title = "About System Information";
+                aboutUs.ShowDialog();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void mnuViewCustomers_Click(object sender, RoutedEventArgs e)
+        {
+            ShowViewCustomerWindow();
+           
+        }
+
+        private void mnuViewFlights_Click(object sender, RoutedEventArgs e)
+        {
+            ShowViewFlightWindow();
+        }
+
+        private void mnuViewAirlines_Click(object sender, RoutedEventArgs e)
+        {
+            ShowViewAirlineWindow();
+        }
+
+        private void mnuViewPassengers_Click(object sender, RoutedEventArgs e)
+        {
+            ShowViewPassengerWindow();
+        }
+
+
 
 
 

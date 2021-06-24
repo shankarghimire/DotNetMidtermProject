@@ -23,7 +23,7 @@ namespace TakeHomeMidterm
         private string userName = "Test";
         private string password="test";
         private DataExchange de = new DataExchange();
-
+        private CustomAPI customAPI = new CustomAPI();
         private List<Logins> loginList = new List<Logins>();
         private Dictionary<string, Logins> usersDictionary = new Dictionary<string, Logins>();
 
@@ -34,11 +34,11 @@ namespace TakeHomeMidterm
             InitializeComponent();
 
             //Console.WriteLine(st);
-            loginList.Add(new Logins(101, "Admin", "test", 1));
-            loginList.Add(new Logins(102, "Shankar", "test", 1));
-            loginList.Add(new Logins(103, "Test1", "test", 0));
-            loginList.Add(new Logins(104, "Test2", "test", 0));
-            loginList.Add(new Logins(105, "Test3", "test", 0));
+            loginList.Add(new Logins(101, "Admin", "test", UserStatus.SuperUser));
+            loginList.Add(new Logins(102, "Shankar", "test", UserStatus.SuperUser));
+            loginList.Add(new Logins(103, "User1", "test", UserStatus.RegularUser));
+            loginList.Add(new Logins(104, "User2", "test", UserStatus.RegularUser));
+            loginList.Add(new Logins(105, "User3", "test", UserStatus.RegularUser));
 
             //Adding to Dictionary
             foreach(var user in loginList)
@@ -74,6 +74,7 @@ namespace TakeHomeMidterm
                     MainWindow m = new MainWindow();
                     DataExchange dataExchangeObj1 = new DataExchange();
                     dataExchangeObj1.saveCurrentUser(temp);
+                    customAPI.saveCurrentUser(temp);
                     //de.currentUser.Id = temp.Id;
                     //de.currentUser.Username = temp.Username;
                     //de.currentUser.Password = temp.Password;
@@ -121,8 +122,8 @@ namespace TakeHomeMidterm
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             tbUsername.Focus();
-            tbUsername.Text = "Admin";
-            pbPassword.Password = "test";
+            //tbUsername.Text = "Admin";
+            //pbPassword.Password = "test";
             
         }
 
@@ -133,16 +134,16 @@ namespace TakeHomeMidterm
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            //var result = MessageBox.Show("Are you sure to quit the program?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            //if (result == MessageBoxResult.Yes)
-            //{
-            //    //this.Close();
-            //    System.Environment.Exit(0);
-            //}
-            //else
-            //{
-            //    e.Cancel = true;
-            //}
+            var result = MessageBox.Show("Are you sure to quit the program?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                //this.Close();
+                System.Environment.Exit(0);
+            }
+            else
+            {
+                e.Cancel = true;
+            }
 
         }
     }

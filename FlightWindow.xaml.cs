@@ -80,7 +80,20 @@ namespace TakeHomeMidterm
 
         private void mnuQuit_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                var result = MessageBox.Show("Are you sure to quit the program?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    this.Hide();
+                    //this.Close();
+                    //System.Environment.Exit(0);
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void btnAddNew_Click(object sender, RoutedEventArgs e)
@@ -184,7 +197,7 @@ namespace TakeHomeMidterm
             DateTime now = DateTime.Now;
             lblDate.Content = now;
             lblUsername.Content = "Username : " + DataExchange.currentUser.Username;
-            if (DataExchange.currentUser.SuperUser == 1)
+            if (CustomAPI.currentUser.UserStatus == UserStatus.SuperUser)
             {
                 lblUserStatus.Content = "User Status:" + "Super User";
             }
@@ -299,25 +312,29 @@ namespace TakeHomeMidterm
         {
             try
             {
-                //lstFlights.Items.Clear();
-                int fId = int.Parse(tbFlightId.Text);
-                var flightToDelete = flightList.Single(flight => flight.Id == fId);
-               
-                flightList.Remove(flightToDelete);
+                var result = MessageBox.Show("Are you sure to delete this record? ", "Delete Confirmation Message", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    //lstFlights.Items.Clear();
+                    int fId = int.Parse(tbFlightId.Text);
+                    var flightToDelete = flightList.Single(flight => flight.Id == fId);
 
-               
-                var flightData = from flight in flightList
-                                 select flight.Id + "\t" + flight.AirlineId + "\t" + flight.DepartureCity + "\t" + flight.DestincationCity + "\t" + flight.DepartureDate + "\t" + flight.FlightTime;
+                    flightList.Remove(flightToDelete);
 
-                lstFlights.DataContext = flightData;
 
-                tbFlightId.Text = "";
-                tbAirlineId.Text = "";
-                tbDepartureCity.Text = "";
-                tbDestinationCity.Text = "";
-                tbDepartureTime.Text = "";
-                tbFlightTime.Text = "";
-                //result = true;
+                    var flightData = from flight in flightList
+                                     select flight.Id + "\t" + flight.AirlineId + "\t" + flight.DepartureCity + "\t" + flight.DestincationCity + "\t" + flight.DepartureDate + "\t" + flight.FlightTime;
+
+                    lstFlights.DataContext = flightData;
+
+                    tbFlightId.Text = "";
+                    tbAirlineId.Text = "";
+                    tbDepartureCity.Text = "";
+                    tbDestinationCity.Text = "";
+                    tbDepartureTime.Text = "";
+                    tbFlightTime.Text = "";
+                    //result = true;
+                }
             }
             catch (Exception ex)
             {
@@ -377,40 +394,120 @@ namespace TakeHomeMidterm
         {
             try
             {
-                int fId = int.Parse(tbFlightId.Text);
-                var flightToUpdate = flightList.Single(flight => flight.Id == fId);
+                var result = MessageBox.Show("Are you sure to update this record? ", "Update Confirmation Message", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    int fId = int.Parse(tbFlightId.Text);
+                    var flightToUpdate = flightList.Single(flight => flight.Id == fId);
 
-                int airlineId = int.Parse(tbAirlineId.Text);
-                string departureCity = tbDepartureCity.Text;
-                string destinationCity = tbDestinationCity.Text;
-                string departureDate = tbDepartureTime.Text;
-                double flightTime = double.Parse(tbFlightTime.Text);
+                    int airlineId = int.Parse(tbAirlineId.Text);
+                    string departureCity = tbDepartureCity.Text;
+                    string destinationCity = tbDestinationCity.Text;
+                    string departureDate = tbDepartureTime.Text;
+                    double flightTime = double.Parse(tbFlightTime.Text);
 
-                flightToUpdate.AirlineId = airlineId;
-                flightToUpdate.DepartureCity = departureCity;
-                flightToUpdate.DestincationCity = destinationCity;
-                flightToUpdate.DepartureDate = departureDate;
-                flightToUpdate.FlightTime = flightTime;
+                    flightToUpdate.AirlineId = airlineId;
+                    flightToUpdate.DepartureCity = departureCity;
+                    flightToUpdate.DestincationCity = destinationCity;
+                    flightToUpdate.DepartureDate = departureDate;
+                    flightToUpdate.FlightTime = flightTime;
 
 
-                var flightData = from flight in flightList
-                                 select flight.Id + "\t" + flight.AirlineId + "\t" + flight.DepartureCity + "\t" + flight.DestincationCity + "\t" + flight.DepartureDate + "\t" + flight.FlightTime;
+                    var flightData = from flight in flightList
+                                     select flight.Id + "\t" + flight.AirlineId + "\t" + flight.DepartureCity + "\t" + flight.DestincationCity + "\t" + flight.DepartureDate + "\t" + flight.FlightTime;
 
-                lstFlights.DataContext = flightData;
+                    lstFlights.DataContext = flightData;
 
-                //de.customerList.Remove(customerToRemove);
-                //var flightData = from Flight in flightList
-                //               select Flight.Id + "\t" + Flight.AirlineId + "\t" + cust.Address + "\t" + cust.Email + "\t" + cust.Phone;
+                    //de.customerList.Remove(customerToRemove);
+                    //var flightData = from Flight in flightList
+                    //               select Flight.Id + "\t" + Flight.AirlineId + "\t" + cust.Address + "\t" + cust.Email + "\t" + cust.Phone;
 
-                //lstCustomers.DataContext = custData;
+                    //lstCustomers.DataContext = custData;
 
-                //result = true;
+                    //result = true;
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
                 //result = false;
             }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            try
+            {
+                var result = MessageBox.Show("Are you sure to quit the program?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    this.Hide();
+                    //this.Close();
+                    //System.Environment.Exit(0);
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void mnuHelp_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                AboutUs aboutUs = new AboutUs();
+                aboutUs.Title = "About System Information";
+                aboutUs.ShowDialog();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            mnuViewFlights.IsEnabled = false;
+
+            if (CustomAPI.currentUser.UserStatus == UserStatus.RegularUser)
+            {
+                btnUpdate.IsEnabled = false;
+                btnDelete.IsEnabled = false;
+                btnAddNew.IsEnabled = false;
+                mnuDelete.IsEnabled = false;
+                mnuUpdate.IsEnabled = false;
+                mnuInsert.IsEnabled = false;
+                ctxMenuDelete.IsEnabled = false;
+                ctxMenuUpdate.IsEnabled = false;
+                ctxMenuInsert.IsEnabled = false;
+            }
+        }
+
+        private void mnuViewCustomers_Click(object sender, RoutedEventArgs e)
+        {
+            CustomerWindow customerWindow = new CustomerWindow();
+            customerWindow.Title = "Customer Information";
+            customerWindow.ShowDialog();
+        }
+
+        private void mnuViewAirlines_Click(object sender, RoutedEventArgs e)
+        {
+            AirlineWindow airlineWindow = new AirlineWindow();
+            airlineWindow.Title = "Airline Information";
+            airlineWindow.ShowDialog();
+        }
+
+        private void mnuViewPassengers_Click(object sender, RoutedEventArgs e)
+        {
+            PassengerWindow passengerWindow = new PassengerWindow();
+            passengerWindow.Title = "Passenger Information";
+            passengerWindow.ShowDialog();
         }
     }
 }

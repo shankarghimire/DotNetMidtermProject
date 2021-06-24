@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TakeHomeMidterm"
         mc:Ignorable="d"
-        Title="CustomerWindow" Height="518" Width="800" Loaded="Window_Loaded" Initialized="Window_Initialized">
+        Title="CustomerWindow" Height="518" Width="800" Loaded="Window_Loaded" Initialized="Window_Initialized" Closing="Window_Closing" WindowStartupLocation="CenterScreen">
 
     <Window.ContextMenu>
         <ContextMenu>
@@ -30,11 +30,11 @@
                 </MenuItem>
                 <MenuItem x:Name="mnuHomePage" Header="Home_Page">
                     <MenuItem x:Name="mnuViewCustomers" Header="View Customers"/>
-                    <MenuItem x:Name="mnuViewFlights" Header="View Flights"/>
-                    <MenuItem x:Name="mnuViewAirlines" Header="View Airlines"/>
-                    <MenuItem x:Name="mnuViewPassengers" Header="View Passengers"/>
+                    <MenuItem x:Name="mnuViewFlights" Header="View Flights" Click="mnuViewFlights_Click"/>
+                    <MenuItem x:Name="mnuViewAirlines" Header="View Airlines" Click="mnuViewAirlines_Click"/>
+                    <MenuItem x:Name="mnuViewPassengers" Header="View Passengers" Click="mnuViewPassengers_Click"/>
                 </MenuItem>
-                <MenuItem x:Name="mnuHelp" Header="_Help"/>
+                <MenuItem x:Name="mnuHelp" Header="_Help" Click="mnuHelp_Click"/>
             </Menu>
 
         </DockPanel>

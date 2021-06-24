@@ -11,7 +11,8 @@ namespace TakeHomeMidterm
         private int id;
         private string username;
         private string password;
-        private int superUser;
+        //private int superUser;
+        private UserStatus userStatus;
         public int Id
         {
             get { return id; }
@@ -29,20 +30,32 @@ namespace TakeHomeMidterm
             get { return password; }
             set { this.password = value; }
         }
-        public int SuperUser
-        {
-            get { return superUser; }
-            set { this.superUser = value; }
-        }
+        //public int SuperUser
+        //{
+        //    get { return superUser; }
+        //    set { this.superUser = value; }
+        //}
 
+        public UserStatus UserStatus
+        {
+            get { return userStatus; }
+            set { this.userStatus = value; }
+        }
         //parameterized constructor
-        public Logins(int id, string username, string password, int superUser)
+        public Logins(int id, string username, string password, UserStatus userStatus)
         {
             Id = id;
             Username = username;
             Password = password;
-            SuperUser = superUser;
+            UserStatus = userStatus;
         }
+        //public Logins(int id, string username, string password, int superUser)
+        //{
+        //    Id = id;
+        //    Username = username;
+        //    Password = password;
+        //    SuperUser = superUser;
+        //}
 
         public Logins()
         {

@@ -83,11 +83,40 @@ namespace TakeHomeMidterm
 
         private void mnuQuit_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                var result = MessageBox.Show("Are you sure to quit the program?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    this.Hide();
+                    //this.Close();
+                    //System.Environment.Exit(0);
+                }
+            }
+            catch(Exception ex){
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
 
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            mnuViewCustomers.IsEnabled = false;
+
+            if (CustomAPI.currentUser.UserStatus == UserStatus.RegularUser)
+            {
+                btnUpdate.IsEnabled = false;
+                btnDelete.IsEnabled = false;
+                btnAddNew.IsEnabled = false;
+                mnuDelete.IsEnabled = false;
+                mnuUpdate.IsEnabled = false;
+                mnuInsert.IsEnabled = false;
+                ctxMenuDelete.IsEnabled = false;
+                ctxMenuUpdate.IsEnabled = false;
+                ctxMenuInsert.IsEnabled = false;
+            }
+
+
             //foreach(var c in de.customerList)
             //{
             //    MessageBox.Show(c.Name);
@@ -105,7 +134,7 @@ namespace TakeHomeMidterm
             //}
 
             //lblUserStatus.Content = "Super";
-              //  de.currentUser.SuperUser == 1 ? lblUserStatus.Content = "Super User" : lblUserStatus.Content = "Normal User";
+            //  de.currentUser.SuperUser == 1 ? lblUserStatus.Content = "Super User" : lblUserStatus.Content = "Normal User";
 
 
         }
@@ -213,7 +242,7 @@ namespace TakeHomeMidterm
             DateTime now = DateTime.Now;
             lblDate.Content = now;
             lblUsername.Content = "Username : " + DataExchange.currentUser.Username;
-            if (DataExchange.currentUser.SuperUser == 1)
+            if (CustomAPI.currentUser.UserStatus == UserStatus.SuperUser)
             {
                 lblUserStatus.Content = "User Status:" + "Super User";
             }
@@ -275,24 +304,29 @@ namespace TakeHomeMidterm
             //bool result = false;
             try
             {
-                int cId = int.Parse(tbCustomerId.Text);
-                var customerToUpdate = customerList.Single(cust => cust.Id == cId);
+                var result = MessageBox.Show("Are you sure to update this record? ", "Update Confirmation Message", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
 
-                string cName = tbCustomerName.Text;
-                string cAdr = tbCustomerAddress.Text;
-                string cEmail = tbCustomerEmail.Text;
-                string cPhone = tbCustomerPhone.Text;
-                customerToUpdate.Name = cName;
-                customerToUpdate.Address = cAdr;
-                customerToUpdate.Email = cEmail;
-                customerToUpdate.Phone = cPhone;
+                    int cId = int.Parse(tbCustomerId.Text);
+                    var customerToUpdate = customerList.Single(cust => cust.Id == cId);
 
-                //de.customerList.Remove(customerToRemove);
-                var custData = from cust in customerList
-                               select cust.Id + "\t" + cust.Name + "\t" + cust.Address + "\t" + cust.Email + "\t" + cust.Phone;
+                    string cName = tbCustomerName.Text;
+                    string cAdr = tbCustomerAddress.Text;
+                    string cEmail = tbCustomerEmail.Text;
+                    string cPhone = tbCustomerPhone.Text;
+                    customerToUpdate.Name = cName;
+                    customerToUpdate.Address = cAdr;
+                    customerToUpdate.Email = cEmail;
+                    customerToUpdate.Phone = cPhone;
 
-                lstCustomers.DataContext = custData;
-                //result = true;
+                    //de.customerList.Remove(customerToRemove);
+                    var custData = from cust in customerList
+                                   select cust.Id + "\t" + cust.Name + "\t" + cust.Address + "\t" + cust.Email + "\t" + cust.Phone;
+
+                    lstCustomers.DataContext = custData;
+                    //result = true;
+                }
             }
             catch (Exception ex)
             {
@@ -306,25 +340,30 @@ namespace TakeHomeMidterm
 
             try
             {
-                int cId = int.Parse(tbCustomerId.Text);
-                var customerToDelete = customerList.Single(cust => cust.Id == cId);
+                var result = MessageBox.Show("Are you sure to delete this record? ", "Delete Confirmation Message", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if(result == MessageBoxResult.Yes)
+                {
+                    int cId = int.Parse(tbCustomerId.Text);
+                    var customerToDelete = customerList.Single(cust => cust.Id == cId);
 
-                customerList.Remove(customerToDelete);
+                    customerList.Remove(customerToDelete);
 
-                //de.customerList.Remove(customerToRemove);
-                var custData = from cust in customerList
-                               select cust.Id + "\t" + cust.Name + "\t" + cust.Address + "\t" + cust.Email + "\t" + cust.Phone;
+                    //de.customerList.Remove(customerToRemove);
+                    var custData = from cust in customerList
+                                   select cust.Id + "\t" + cust.Name + "\t" + cust.Address + "\t" + cust.Email + "\t" + cust.Phone;
 
-                //lstCustomers.DataContext = ClearValue();
-                //lstCustomers.Items.Clear();
-                lstCustomers.DataContext = custData;
+                    //lstCustomers.DataContext = ClearValue();
+                    //lstCustomers.Items.Clear();
+                    lstCustomers.DataContext = custData;
 
-                //Clear the Textboxes
-                tbCustomerId.Text = "";
-                tbCustomerName.Text = "";
-                tbCustomerAddress.Text = "";
-                tbCustomerEmail.Text = "";
-                tbCustomerPhone.Text = "";
+                    //Clear the Textboxes
+                    tbCustomerId.Text = "";
+                    tbCustomerName.Text = "";
+                    tbCustomerAddress.Text = "";
+                    tbCustomerEmail.Text = "";
+                    tbCustomerPhone.Text = "";
+                }
+                
                 //result = true;
             }
             catch (Exception ex)
@@ -348,6 +387,66 @@ namespace TakeHomeMidterm
         private void mnuDelete_Click(object sender, RoutedEventArgs e)
         {
             DeleteCursomterRecord();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            try
+            {
+                var result = MessageBox.Show("Are you sure to quit the Customer View Window?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    this.Hide();
+                    //this.Close();
+                    //System.Environment.Exit(0);
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
+            
+        }
+
+        private void mnuHelp_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                AboutUs aboutUs = new AboutUs();
+                aboutUs.Title = "About System Information";
+                aboutUs.ShowDialog();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void mnuViewFlights_Click(object sender, RoutedEventArgs e)
+        {
+            FlightWindow flightWindow = new FlightWindow();
+            flightWindow.Title = "Flight Information";
+            flightWindow.ShowDialog();
+        }
+
+        private void mnuViewAirlines_Click(object sender, RoutedEventArgs e)
+        {
+            AirlineWindow airlineWindow = new AirlineWindow();
+            airlineWindow.Title = "Airline Information";
+            airlineWindow.ShowDialog();
+        }
+
+        private void mnuViewPassengers_Click(object sender, RoutedEventArgs e)
+        {
+            PassengerWindow passengerWindow = new PassengerWindow();
+            passengerWindow.Title = "Passenger Information";
+            passengerWindow.ShowDialog();
         }
     }
 }
