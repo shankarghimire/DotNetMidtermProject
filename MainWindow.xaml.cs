@@ -111,26 +111,16 @@ namespace TakeHomeMidterm
         }
         private void ShowViewPassengerWindow()
         {
+
             PassengerWindow pw = new PassengerWindow();
             pw.Background = Brushes.AliceBlue;
             pw.Title = "View Passengers";
             pw.ShowDialog();
         }
-        private void Window_Initialized(object sender, EventArgs e)
-        {
-            //MessageBox.Show(DataExchange.currentUser.Username);
-            //DateTime now = DateTime.Now;
-            //lblDate.Content = now;
-            //lblUsername.Content = "Username : " + DataExchange.currentUser.Username;
-            //if (DataExchange.currentUser.SuperUser == 1)
-            //{
-            //    lblUserStatus.Content = "User Status:" + "Super User";
-            //}
-            //else
-            //{
-            //    lblUserStatus.Content = "User Status:" + "Normal User";
-            //}
-        }
+        //private void Window_Initialized(object sender, EventArgs e)
+        //{
+
+        //}
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -201,6 +191,11 @@ namespace TakeHomeMidterm
         private void mnuViewPassengers_Click(object sender, RoutedEventArgs e)
         {
             ShowViewPassengerWindow();
+        }
+
+        private void Window_Initialized(object sender, EventArgs e)
+        {
+
         }
 
 
