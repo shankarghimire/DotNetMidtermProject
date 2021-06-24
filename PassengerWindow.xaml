@@ -14,7 +14,7 @@
             <MenuItem x:Name="ctxMenuDelete" Header="_Delete" Click="ctxMenuDelete_Click" />
         </ContextMenu>
     </Window.ContextMenu>
-    <Grid>
+    <Grid Background="#33ffcc">
         <DockPanel Margin="0,10,-0.4,379">
             <Menu x:Name="mainMenu" Height="38" VerticalAlignment="Top" Width="787" HorizontalAlignment="Left" Margin="0,-10,0,-8">
                 <MenuItem x:Name="mnuFile" Header="_File" Click="mnuFile_Click" HorizontalAlignment="Left" VerticalAlignment="Top" >
@@ -48,21 +48,24 @@
                          ItemsSource="{Binding}" SelectionChanged="lstPassengers_SelectionChanged" />
 
             </StackPanel>
-            <StackPanel Grid.Column="1" Margin="10.2,10,9.6,113">
+            <StackPanel Grid.Column="1" Margin="10.2,10,9.6,55">
                 <Label Content="Passenger Id"></Label>
-                <TextBox x:Name="tbPassengerId"></TextBox>
+                <TextBox x:Name="tbPassengerId" Height="25"></TextBox>
                 <Label Content="Customer Id"></Label>
-                <TextBox x:Name="tbCustomerId"></TextBox>
+                <TextBox x:Name="tbCustomerId" Height="25"></TextBox>
                 <Label Content="Flight Id"></Label>
-                <TextBox x:Name="tbFlightId"></TextBox>
+                <TextBox x:Name="tbFlightId" Height="25"></TextBox>
                 
                 <Separator></Separator>
-                <Button x:Name="btnAddNew" Content="Add New" Click="btnAddNew_Click" Margin="5"></Button>
-                <Button x:Name="btnUpdate" Content="Update" Click="btnUpdate_Click" Margin="5"></Button>
-                <Button x:Name="btnDelete" Content="Delete" Click="btnDelete_Click" Margin="5"></Button>
+                <Button x:Name="btnAddNew" Content="Add New" Click="btnAddNew_Click" Margin="5" Height="30"></Button>
+                <Separator></Separator>
+                <Button x:Name="btnUpdate" Content="Update" Click="btnUpdate_Click" Margin="5" Height="30"></Button>
+                <Separator></Separator>
+                <Button x:Name="btnDelete" Content="Delete" Click="btnDelete_Click" Margin="5" Height="30"></Button>
+                <Separator></Separator>
             </StackPanel>
         </Grid>
-        <StatusBar HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
+        <StatusBar Background="#42c8f5" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100" />

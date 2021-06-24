@@ -5,10 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TakeHomeMidterm"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Initialized="Window_Initialized" Loaded="Window_Loaded">
-    <Grid Margin="0,91,-0.4,0" Background="#33ffcc">
-        <DockPanel Margin="0,-75,0,375">
-            <Menu x:Name="mainMenu"  VerticalAlignment="Top"  Foreground="Black" FontWeight="Bold" FontSize="16" Height="30" Width="787" HorizontalAlignment="Left" Margin="0,-10,0,8">
+        Title="MainWindow" Height="450" Width="902.4" Initialized="Window_Initialized" Loaded="Window_Loaded">
+    <Grid Margin="0,89,-0.4,0" Background="#33ffcc">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="457*"/>
+            <ColumnDefinition Width="54*"/>
+            <ColumnDefinition Width="283*"/>
+        </Grid.ColumnDefinitions>
+        <DockPanel Margin="0,-75,-0.4,330" Background="#42c8f5" Grid.ColumnSpan="3">
+            <Menu x:Name="mainMenu"  VerticalAlignment="Top"  Foreground="Black" FontWeight="Bold" FontSize="16" Height="30" Width="895" HorizontalAlignment="Left" Margin="0,-10,0,0">
                 <MenuItem x:Name="mnuFile" Header="_File" Click="mnuFile_Click" HorizontalAlignment="Left" VerticalAlignment="Top"   >
                     <MenuItem x:Name="mnuNew" Header="_New"/>
                     <MenuItem x:Name="mnuSave" Header="_Save"/>
@@ -29,14 +34,14 @@
             </Menu>
 
         </DockPanel>
-        <StackPanel Orientation="Horizontal" Margin="0,51,10,199">
-            <Button x:Name="btnViewCustomers" Content="View Customers" Width="190" Margin="5" Click="btnViewCustomers_Click"/>
-            <Button x:Name="btnViewFlights" Content="View Flights" Width="169" Margin="5" Click="btnViewFlights_Click"/>
-            <Button x:Name="btnViewAirlines" Content="View Airlines" Width="192" Margin="5" Click="btnViewAirlines_Click"/>
-            <Button x:Name="btnViewPassengers" Content="View Passengers" Width="240" Margin="5" Click="btnViewPassengers_Click"/>
+        <StackPanel Orientation="Horizontal" Margin="0,51,9.6,199" Grid.ColumnSpan="3">
+            <Button x:Name="btnViewCustomers" Content="View Customers" Width="190" Margin="5" Click="btnViewCustomers_Click" FontWeight="Bold" FontSize="20" Background="#42c8f5"/>
+            <Button x:Name="btnViewFlights" Content="View Flights" Width="169" Margin="5" Click="btnViewFlights_Click" FontWeight="Bold" FontSize="20" Background="#42c8f5" />
+            <Button x:Name="btnViewAirlines" Content="View Airlines" Width="192" Margin="5" Click="btnViewAirlines_Click" FontWeight="Bold" FontSize="20" Background="#42c8f5"/>
+            <Button x:Name="btnViewPassengers" Content="View Passengers" Width="240" Margin="5" Click="btnViewPassengers_Click" FontWeight="Bold" FontSize="20" Background="#42c8f5"/>
 
         </StackPanel>
-        <StatusBar HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
+        <StatusBar Background="#42c8f5" FontWeight="Bold"  HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Grid.ColumnSpan="3" Margin="0,0,-0.4,0">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100" />

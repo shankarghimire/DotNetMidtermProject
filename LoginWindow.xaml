@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TakeHomeMidterm"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="200" Width="400" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Unloaded="Window_Unloaded" Closing="Window_Closing">
-    <Grid Background="AliceBlue" RenderTransformOrigin="0.501,0.451">
+        Title="LoginWindow" Height="200" Width="400" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Unloaded="Window_Unloaded" Closing="Window_Closing" >
+    <Grid Background="#33ffcc"  RenderTransformOrigin="0.501,0.451" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>

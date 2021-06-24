@@ -9,10 +9,10 @@
 
     <Window.Resources>
         <Style x:Key = "myButtonStyle" TargetType = "Button">
-            <Setter Property = "Height" Value = "80" />
+            <Setter Property = "Height" Value = "60" />
             <Setter Property = "Width" Value = "200" />
             <Setter Property = "Foreground" Value = "Blue" />
-            <Setter Property = "FontSize" Value = "30" />
+            <Setter Property = "FontSize" Value = "25" />
             <Setter Property = "Margin" Value = "10" />
         </Style>
     </Window.Resources>
@@ -26,7 +26,7 @@
     </Window.ContextMenu>
 
 
-    <Grid>
+    <Grid Background="#33ffcc">
         <DockPanel Margin="0,10,-0.4,379">
             <Menu x:Name="mainMenu" Height="38" VerticalAlignment="Top" Width="787" HorizontalAlignment="Left" Margin="0,-10,0,-8">
                 <MenuItem x:Name="mnuFile" Header="_File" Click="mnuFile_Click" HorizontalAlignment="Left" VerticalAlignment="Top" >
@@ -67,32 +67,32 @@
                 <ListBox x:Name="lstAirlines" Height="187" Margin="0,0,-0.4,0"
                          ItemsSource="{Binding}" SelectionChanged="lstAirlines_SelectionChanged" />
             </StackPanel>
-            <StackPanel Width="793" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Background="Bisque" Margin="0,205,0.6,0" Grid.RowSpan="3" Height="102" VerticalAlignment="Top">
+            <StackPanel  Width="793" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Background="#42c8f5" Margin="0,205,0.6,0" Grid.RowSpan="3" Height="102" VerticalAlignment="Top">
                 <Button x:Name="btnAddNew" Content="Add New" Click="btnAddNew_Click"  Style = "{StaticResource myButtonStyle}"></Button>
                 <Button x:Name="btnUpdate" Content="Update" Click="btnUpdate_Click"  Style = "{StaticResource myButtonStyle}"></Button>
                 <Button x:Name="btnDelete" Content="Delete" Click="btnDelete_Click"  Style = "{StaticResource myButtonStyle}"/>
             </StackPanel>
 
-            <StackPanel Grid.Row="2" Grid.Column="0" Margin="10,6,9.8,128.4" Background="MediumSeaGreen">
+            <StackPanel Grid.Row="2" Grid.Column="0" Margin="10,6.4,9.8,82.8" >
                 <Label Content="Airline Id" Height="28" Margin="0,0,-0.2,0"></Label>
-                <TextBox x:Name="tbAirlineId"></TextBox>
-                <Label Content=" Airline Name"></Label>
-                <TextBox x:Name="tbAirlineName"></TextBox>
+                <TextBox x:Name="tbAirlineId" Height="30"></TextBox>
+                <Label Content=" Airline Name" Height="30"></Label>
+                <TextBox x:Name="tbAirlineName" Height="30"></TextBox>
 
                 <Label Content="Number of Seats Available"></Label>
-                <TextBox x:Name="tbAvailableSeats"></TextBox>
+                <TextBox x:Name="tbAvailableSeats" Height="30"></TextBox>
 
             </StackPanel>
-            <StackPanel Grid.Row="2" Grid.Column="1" Background="MediumSeaGreen" Margin="0.2,0,-0.4,128.4">
-                <GroupBox Header="Airplane Name" Width="140" HorizontalAlignment="Left" Height="87" Margin="10,0,0,0">
+            <StackPanel Grid.Row="2" Grid.Column="1"  Margin="0.2,10.4,215.6,99.8">
+                <GroupBox Header="Airplane Name" Width="150" HorizontalAlignment="Left" Height="87" Margin="10,0,0,0">
                     <StackPanel>
                         <RadioButton Name="rdBoeing777" Content="Boeing777"/>
                         <RadioButton Name="rdAirbus320" Content="Airbus320"/>
                         <RadioButton Name="rdOther" Content="Other"/>
                     </StackPanel>
                 </GroupBox>
-                <GroupBox Header="Available Meals" Width="150" HorizontalAlignment="Left">
-                    <StackPanel>
+                <GroupBox Header="Available Meals" Width="150" HorizontalAlignment="Left" Margin="10,0,0,0">
+                    <StackPanel Margin="0,0,-1.6,0">
                         <RadioButton Name="rdChicken" Content="Chicken"/>
                         <RadioButton Name="rdSushi" Content="Sushi"/>
                         <RadioButton Name="rdSalad" Content="Salad"/>
@@ -101,7 +101,7 @@
                 </GroupBox>
             </StackPanel>
         </Grid>
-        <StatusBar HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
+        <StatusBar Background="#42c8f5" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100" />
