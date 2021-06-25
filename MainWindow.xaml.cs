@@ -25,19 +25,28 @@ namespace TakeHomeMidterm
         private DataExchange de = new DataExchange();
         public MainWindow()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
 
-            //Method call to initialize customers
-            //customerList.Add(new Customer(101, "Shankar Ghimire","Brampton","sg@gmail.com","123-444-5555"));
-            //customerList.Add(new Customer(102, "Harry Smith", "Brampton", "hs@gmail.com", "123-333-4444"));
-            //customerList.Add(new Customer(103, "Mike Steve", "Brampton", "ms@gmail.com", "123-555-6666"));
-            //customerList.Add(new Customer(104, "Rama Ghimire", "Brampton", "rg@gmail.com", "123-666-7777"));
-            //customerList.Add(new Customer(105, "Sam Ghimire", "Brampton", "samg@gmail.com", "123-777-8888"));
+                //Method call to initialize customers
+                //customerList.Add(new Customer(101, "Shankar Ghimire","Brampton","sg@gmail.com","123-444-5555"));
+                //customerList.Add(new Customer(102, "Harry Smith", "Brampton", "hs@gmail.com", "123-333-4444"));
+                //customerList.Add(new Customer(103, "Mike Steve", "Brampton", "ms@gmail.com", "123-555-6666"));
+                //customerList.Add(new Customer(104, "Rama Ghimire", "Brampton", "rg@gmail.com", "123-666-7777"));
+                //customerList.Add(new Customer(105, "Sam Ghimire", "Brampton", "samg@gmail.com", "123-777-8888"));
 
-            //foreach(var cust in de.customerList)
-            //{
-            //    MessageBox.Show(cust.Name);
-            //}
+                //foreach(var cust in de.customerList)
+                //{
+                //    MessageBox.Show(cust.Name);
+                //}
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+          
             
 
         }
@@ -45,12 +54,21 @@ namespace TakeHomeMidterm
        
         private void mnuQuit_Click(object sender, RoutedEventArgs e)
         {
-            var result = MessageBox.Show("Are you sure to quit the program?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (result == MessageBoxResult.Yes)
+            try
             {
-                //this.Close();
-                System.Environment.Exit(0);
+                var result = MessageBox.Show("Are you sure to quit the program?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    //this.Close();
+                    System.Environment.Exit(0);
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+         
             
             
         }
@@ -64,58 +82,121 @@ namespace TakeHomeMidterm
 
         private void btnViewCustomers_Click(object sender, RoutedEventArgs e)
         {
-            ShowViewCustomerWindow();
-            //CustomerWindow cw = new CustomerWindow();                    
-            //cw.Background = Brushes.AliceBlue;
-            //cw.Title = "View Customers";
-            //cw.ShowDialog();
-            //this.WindowState = WindowState.Minimized;
+            try
+            {
+                ShowViewCustomerWindow();
+                //CustomerWindow cw = new CustomerWindow();                    
+                //cw.Background = Brushes.AliceBlue;
+                //cw.Title = "View Customers";
+                //cw.ShowDialog();
+                //this.WindowState = WindowState.Minimized;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+           
         }
 
         private void ShowViewCustomerWindow()
         {
-            CustomerWindow cw = new CustomerWindow();
-            cw.Background = Brushes.AliceBlue;
-            cw.Title = "View Customers";
-            cw.ShowDialog();
+            try
+            {
+                CustomerWindow cw = new CustomerWindow();
+                cw.Background = Brushes.AliceBlue;
+                cw.Title = "View Customers";
+                cw.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+           
         }
 
         private void btnViewFlights_Click(object sender, RoutedEventArgs e)
         {
-            ShowViewFlightWindow();
+            try
+            {
+                ShowViewFlightWindow();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+           
         }
 
         private void ShowViewFlightWindow()
         {
-            FlightWindow fw = new FlightWindow();
-            fw.Background = Brushes.AliceBlue;
-            fw.Title = "View Flights";
-            fw.ShowDialog();
+            try
+            {
+                FlightWindow fw = new FlightWindow();
+                fw.Background = Brushes.AliceBlue;
+                fw.Title = "View Flights";
+                fw.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        
         }
 
         private void btnViewAirlines_Click(object sender, RoutedEventArgs e)
         {
-            ShowViewAirlineWindow();
+            try
+            {
+                ShowViewAirlineWindow();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
         }
 
         private void ShowViewAirlineWindow()
         {
-            AirlineWindow aw = new AirlineWindow();
-            aw.Background = Brushes.AliceBlue;
-            aw.Title = "View Airlines";
-            aw.ShowDialog();
+            try
+            {
+                AirlineWindow aw = new AirlineWindow();
+                aw.Background = Brushes.AliceBlue;
+                aw.Title = "View Airlines";
+                aw.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+         
         }
         private void btnViewPassengers_Click(object sender, RoutedEventArgs e)
         {
-            ShowViewPassengerWindow();
+            try
+            {
+                ShowViewPassengerWindow();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+           
         }
         private void ShowViewPassengerWindow()
         {
+            try
+            {
+                PassengerWindow pw = new PassengerWindow();
+                pw.Background = Brushes.AliceBlue;
+                pw.Title = "View Passengers";
+                pw.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
-            PassengerWindow pw = new PassengerWindow();
-            pw.Background = Brushes.AliceBlue;
-            pw.Title = "View Passengers";
-            pw.ShowDialog();
         }
         //private void Window_Initialized(object sender, EventArgs e)
         //{
@@ -124,38 +205,53 @@ namespace TakeHomeMidterm
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //MessageBox.Show(DataExchange.currentUser.Username);
-            DateTime now = DateTime.Now;
-            lblDate.Content = now;
-            lblUsername.Content = "Username : " + DataExchange.currentUser.Username;
-            if (CustomAPI.currentUser.UserStatus == UserStatus.SuperUser)
-            {
-                lblUserStatus.Content = "User Status:" + "Super User";
+            try
+            { //MessageBox.Show(DataExchange.currentUser.Username);
+                DateTime now = DateTime.Now;
+                lblDate.Content = now;
+                lblUsername.Content = "Username : " + DataExchange.currentUser.Username;
+                if (CustomAPI.currentUser.UserStatus == UserStatus.SuperUser)
+                {
+                    lblUserStatus.Content = "User Status:" + "Super User";
+                }
+                else
+                {
+                    lblUserStatus.Content = "User Status:" + "Normal User";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                lblUserStatus.Content = "User Status:" + "Normal User";
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+           
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            var result = MessageBox.Show("Are you sure to quit the program?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (result == MessageBoxResult.Yes)
+            try
             {
-                //this.Close();
-                System.Environment.Exit(0);
+                var result = MessageBox.Show("Are you sure to quit the program?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    //this.Close();
+                    System.Environment.Exit(0);
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                e.Cancel = true;
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+          
         }
 
-        private void mnuHelp_Click_1(object sender, RoutedEventArgs e)
-        {
+        //private void mnuHelp_Click_1(object sender, RoutedEventArgs e)
+        //{
 
-        }
+        //}
 
         private void mnuHelp_Click(object sender, RoutedEventArgs e)
         {
@@ -174,23 +270,55 @@ namespace TakeHomeMidterm
 
         private void mnuViewCustomers_Click(object sender, RoutedEventArgs e)
         {
-            ShowViewCustomerWindow();
+            try
+            {
+                ShowViewCustomerWindow();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+           
            
         }
 
         private void mnuViewFlights_Click(object sender, RoutedEventArgs e)
         {
-            ShowViewFlightWindow();
+            try
+            {
+                ShowViewFlightWindow();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+           
         }
 
         private void mnuViewAirlines_Click(object sender, RoutedEventArgs e)
         {
-            ShowViewAirlineWindow();
+            try
+            {
+                ShowViewAirlineWindow();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
         }
 
         private void mnuViewPassengers_Click(object sender, RoutedEventArgs e)
         {
-            ShowViewPassengerWindow();
+            try
+            {
+                ShowViewPassengerWindow();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
         }
 
         private void Window_Initialized(object sender, EventArgs e)

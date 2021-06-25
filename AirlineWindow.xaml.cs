@@ -29,19 +29,21 @@ namespace TakeHomeMidterm
 
         public AirlineWindow()
         {
-            InitializeComponent();
-            airlineQueue = customAPIObj.GetAirlineQueue();
-            var airlineData = from airline in airlineQueue
-                               select airline.Id + "\t" + airline.Name + "\t" + airline.Airplane + "\t" + airline.SeatAvailable + "\t" + airline.MealAvailable;
-            lstAirlines.DataContext = airlineData;
-
-
+            try
+            {
+                InitializeComponent();
+                airlineQueue = customAPIObj.GetAirlineQueue();
+                var airlineData = from airline in airlineQueue
+                                  select airline.Id + "\t" + airline.Name + "\t" + airline.Airplane + "\t" + airline.SeatAvailable + "\t" + airline.MealAvailable;
+                lstAirlines.DataContext = airlineData;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+           
         }
 
-        private void mnuFile_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         private void mnuQuit_Click(object sender, RoutedEventArgs e)
         {
@@ -63,267 +65,155 @@ namespace TakeHomeMidterm
 
         private void lstAirlines_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int i = lstAirlines.SelectedIndex;
-           
-            if(i == 0)
+            try
             {
-                var selectedListItem = lstAirlines.SelectedItem.ToString();
-                string[] words = selectedListItem.Split('\t');
-                
-                int id = int.Parse(words[0].ToString());
-               
-                var selectedAirline = from airline in airlineQueue
-                                      where airline.Id == (id )
-                                      select airline;
-                //Customer temp = (Customer)selectedCustomer;
-                //MessageBox.Show(temp.Name);
-                foreach (var ap in selectedAirline)
+                int i = lstAirlines.SelectedIndex;
+
+                if (i == 0)
                 {
-                    tbAirlineId.Text = ap.Id.ToString();
-                    tbAirlineName.Text = ap.Name;
-                    //MessageBox.Show(c.Name);
-                    Airplane apName = ap.Airplane;
-                    SetRequiredAirplane(apName);                  
-                    tbAvailableSeats.Text = ap.SeatAvailable.ToString();
-                    MealAvailable mlAvilable = ap.MealAvailable;
-                    SetRequiredMealAvilable(mlAvilable);                  
+                    var selectedListItem = lstAirlines.SelectedItem.ToString();
+                    string[] words = selectedListItem.Split('\t');
+
+                    int id = int.Parse(words[0].ToString());
+
+                    var selectedAirline = from airline in airlineQueue
+                                          where airline.Id == (id)
+                                          select airline;
+                    //Customer temp = (Customer)selectedCustomer;
+                    //MessageBox.Show(temp.Name);
+                    foreach (var ap in selectedAirline)
+                    {
+                        tbAirlineId.Text = ap.Id.ToString();
+                        tbAirlineName.Text = ap.Name;
+                        //MessageBox.Show(c.Name);
+                        Airplane apName = ap.Airplane;
+                        SetRequiredAirplane(apName);
+                        tbAvailableSeats.Text = ap.SeatAvailable.ToString();
+                        MealAvailable mlAvilable = ap.MealAvailable;
+                        SetRequiredMealAvilable(mlAvilable);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("You can only load the top Airline Name due to its Queues Data structure on to the textbox.", "Airline Information", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("You can only load the top Airline Name due to its Data structure on to the textbox.", "Airline Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
+            
            
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
-            UpdateAirlineRecord();
+            try
+            {
+                UpdateAirlineRecord();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+         
 
-            ////bool result = false;
-            //try
-            //{
-            //    int aId = int.Parse(tbAirlineId.Text);
-            //    var airlineToUpdate = airlineQueue.Single(air => air.Id == aId);
-
-            //    string airlineName = tbAirlineName.Text;
-            //    //string airPlane = tbAirplane.Text;
-            //    Airplane airplaneName = GetSelectedAirplane();
-               
-            //    //if(rdBoeing777.IsChecked == true)
-            //    //{
-            //    //    airplaneName = Airplane.Boeing777;
-            //    //}
-            //    //else if(rdAirbus320.IsChecked == true)
-            //    //{
-            //    //    airplaneName = Airplane.Airbus320;
-            //    //}
-            //    //else if (rdOther.IsChecked == true)
-            //    //{
-            //    //    airplaneName = Airplane.Other;
-            //    //}
-            //    int aSeatsAvailable = int.Parse( tbAvailableSeats.Text);
-            //    //string aMeal = tbMealAvailable.Text;
-            //    MealAvailable mealAvailable = GetSelectedMealAvilable() ;
-            //    //if(rdChicken.IsChecked == true)
-            //    //{
-            //    //    mealAvailable = MealAvailable.Chicken;
-            //    //}
-            //    //else if(rdSushi.IsChecked == true)
-            //    //{
-            //    //    mealAvailable = MealAvailable.Sushi;
-            //    //}
-            //    //else if(rdSalad.IsChecked == true)
-            //    //{
-            //    //    mealAvailable = MealAvailable.Salad;
-            //    //}
-            //    //else if (rdOtherMeal.IsChecked == true)
-            //    //{
-            //    //    mealAvailable = MealAvailable.Other;
-            //    //}
-            //    //switch (aMeal)
-            //    //{
-            //    //    case "Chicken":
-            //    //        aMealAvailable = MealAvailable.Chicken;
-            //    //        break;
-            //    //    case "Sushi":
-            //    //        aMealAvailable = MealAvailable.Sushi;
-            //    //        break;
-            //    //    case "Salad":
-            //    //        aMealAvailable = MealAvailable.Salad;
-            //    //        break;
-            //    //    default:
-            //    //        MessageBox.Show("Invalid value for the Meal Available :", "Data Error", MessageBoxButton.OK, MessageBoxImage.Information);
-            //    //        break;
-            //    //}
-                
-            //    airlineToUpdate.Name = airlineName;
-            //    airlineToUpdate.Airplane = GetSelectedAirplane();
-            //    airlineToUpdate.SeatAvailable = aSeatsAvailable;
-            //    airlineToUpdate.MealAvailable = GetSelectedMealAvilable();
-
-            //    //de.customerList.Remove(customerToRemove);
-            //    var airlineData = from airline in airlineQueue
-            //                      select airline.Id + "\t" + airline.Name + "\t" + airline.Airplane + "\t" + airline.SeatAvailable + "\t" + airline.MealAvailable;
-
-            //    lstAirlines.DataContext = airlineData;
-            //    //result = true;
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.ToString(),"Eror Message",MessageBoxButton.OK,MessageBoxImage.Error);
-                    
-            //    //result = false;
-            //}
+            
         }
 
         private void btnAddNew_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                InsertAirlineRecord();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
-            InsertAirlineRecord();
+           
 
-
-            //if (tbAirlineId.Text == "" || tbAirlineName.Text == "" || IsAirplaneNameValid() == false || tbAvailableSeats.Text == "" || IsMealAvailableValid() == false)
-            //{
-            //    MessageBox.Show("All the fields are mandatory!", "Data Validation Error", MessageBoxButton.OK, MessageBoxImage.Information);
-            //}
-            //else
-            //{
-            //    int aId = int.Parse(tbAirlineId.Text);
-            //    if(IsAirlineIdValid(aId) == false)
-            //    {
-            //        MessageBox.Show("AirlineId cannot be repeated!, Please enter a unique Id for AirlineId. ","Data Error",MessageBoxButton
-            //            .OK, MessageBoxImage.Error);
-            //        return;
-            //    }
-
-            //    string aName = tbAirlineName.Text;
-            //    //string  aAirplane= tbAirplane.Text;
-            //    Airplane airplane = GetSelectedAirplane();
-            //    int aSeatsAvailable =int.Parse( tbAvailableSeats.Text);
-            //    //string meal = tbMealAvailable.Text;
-            //    MealAvailable mealAvailable = GetSelectedMealAvilable();
-            //    //MealAvailable aMealAvailable; 
-                
-            //    airlineQueue.Enqueue(new Airline(aId, aName, airplane, aSeatsAvailable, mealAvailable));
-            //    var airlineData = from airline in airlineQueue
-            //                      select airline.Id + "\t" + airline.Name + "\t" + airline.Airplane + "\t" + airline.SeatAvailable + "\t" + airline.MealAvailable;
-
-            //    lstAirlines.DataContext = airlineData;
-            //}
 
 
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            DeleteAirlineRecord();
+            try
+            {
+                DeleteAirlineRecord();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+           
 
-            //try
-            //{
-            //    //int aId = int.Parse(tbAirlineId.Text);
-            //    //var airlineToDelete = airlineQueue.Single(air => air.Id == aId);
-
-            //    airlineQueue.Dequeue();
-
-            //    //de.customerList.Remove(customerToRemove);
-            //    var airlineData = from airline in airlineQueue
-            //                      select airline.Id + "\t" + airline.Name + "\t" + airline.Airplane + "\t" + airline.SeatAvailable + "\t" + airline.MealAvailable;
-
-            //    lstAirlines.DataContext = airlineData;
-            //    //
-            //    tbAirlineId.Text = "";
-            //    tbAirlineName.Text = "";
-            //    tbAvailableSeats.Text = "";
-            //    rdAirbus320.IsChecked = false;
-            //    rdBoeing777.IsChecked = false;
-            //    rdOther.IsChecked = false;
-            //    rdChicken.IsChecked = false;
-            //    rdSushi.IsChecked = false;
-            //    rdSalad.IsChecked = false;
-            //    rdOtherMeal.IsChecked = false;
-
-            //    //result = true;
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.ToString(), "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
-            //    //result = false;
-            //}
+            
         }
 
 
         private void ShowCurrentUser()
         {
-            //MessageBox.Show(DataExchange.currentUser.Username);
-            DateTime now = DateTime.Now;
-            lblDate.Content = now;
-            lblUsername.Content = "Username : " + DataExchange.currentUser.Username;
-            if (CustomAPI.currentUser.UserStatus == UserStatus.SuperUser)
+            try
             {
-                lblUserStatus.Content = "User Status:" + "Super User";
+                //MessageBox.Show(DataExchange.currentUser.Username);
+                DateTime now = DateTime.Now;
+                lblDate.Content = now;
+                lblUsername.Content = "Username : " + DataExchange.currentUser.Username;
+                if (CustomAPI.currentUser.UserStatus == UserStatus.SuperUser)
+                {
+                    lblUserStatus.Content = "User Status:" + "Super User";
+                }
+                else
+                {
+                    lblUserStatus.Content = "User Status:" + "Normal User";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                lblUserStatus.Content = "User Status:" + "Normal User";
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+          
         }
 
         private void Window_Initialized(object sender, EventArgs e)
         {
-            ShowCurrentUser();
+            try
+            {
+                ShowCurrentUser();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+           
         }
 
-        //private void btnTest_Click(object sender, RoutedEventArgs e)
-        //{
-        //    //if (rdBoeing777.IsChecked ==true)
-        //    //{
-        //    //    MessageBox.Show("Selected airplane : " + rdBoeing777.Content);
-        //    //}
-        //    //else if(rdAirbus320.IsChecked == true)
-        //    //{
-        //    //    MessageBox.Show("Selected airplane : " + rdAirbus320.Content);
-        //    //}
-        //    //else if(rdOther.IsChecked == true)
-        //    //{
-        //    //    MessageBox.Show("Selected airplane : " + rdOther.Content);
-        //    //}
-        //    //else
-        //    //{
-        //    //    MessageBox.Show("You should select at least one airplane name : " );
-        //    //}
 
-        //    //if (rdChicken.IsChecked == true)
-        //    //{
-        //    //    MessageBox.Show("Selected Meal : " + rdChicken.Content);
-        //    //}
-        //    //else if(rdSushi.IsChecked == true)
-        //    //{
-        //    //    MessageBox.Show("Selected Meal : " + rdSushi.Content);
-        //    //}
-        //    //else if (rdSalad.IsChecked == true)
-        //    //{
-        //    //    MessageBox.Show("Selected Meal : " + rdSalad.Content);
-        //    //}
-        //    //else if (rdOtherMeal.IsChecked == true)
-        //    //{
-        //    //    MessageBox.Show("Selected Meal : " + rdOtherMeal.Content);
-        //    //}
-
-
-        //}
 
         private bool IsAirplaneNameValid()
         {
             bool result = false;
-            if (rdBoeing777.IsChecked == false && rdAirbus320.IsChecked == false && rdOther.IsChecked == false)
+            try
             {
-                result = false;
+                if (rdBoeing777.IsChecked == false && rdAirbus320.IsChecked == false && rdOther.IsChecked == false)
+                {
+                    result = false;
+                }
+                else
+                {
+                    result = true;
+                }
             }
-            else 
+            catch (Exception ex)
             {
-                result = true;
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+          
+          
                        
             return result;
         }
@@ -331,159 +221,204 @@ namespace TakeHomeMidterm
         private Airplane GetSelectedAirplane()
         {
             Airplane selectedAirplane = Airplane.Other;
-            if(rdBoeing777.IsChecked == true)
+            try
             {
-                selectedAirplane = Airplane.Boeing777;
+                if (rdBoeing777.IsChecked == true)
+                {
+                    selectedAirplane = Airplane.Boeing777;
+                }
+                else if (rdAirbus320.IsChecked == true)
+                {
+                    selectedAirplane = Airplane.Airbus320;
+                }
+                else if (rdOther.IsChecked == true)
+                {
+                    selectedAirplane = Airplane.Other;
+                }
             }
-            else if(rdAirbus320.IsChecked == true)
+            catch (Exception ex)
             {
-                selectedAirplane = Airplane.Airbus320;
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else if(rdOther.IsChecked == true)
-            {
-                selectedAirplane = Airplane.Other;
-            }
+           
+           
             return selectedAirplane;
         }
 
         private void SetRequiredAirplane(Airplane airplane)
         {
-            if(airplane == Airplane.Boeing777)
+            try
             {
-                rdBoeing777.IsChecked = true;
+                if (airplane == Airplane.Boeing777)
+                {
+                    rdBoeing777.IsChecked = true;
+                }
+                else if (airplane == Airplane.Airbus320)
+                {
+                    rdAirbus320.IsChecked = true;
+                }
+                else if (airplane == Airplane.Other)
+                {
+                    rdOther.IsChecked = true;
+                }
             }
-            else if(airplane == Airplane.Airbus320)
+            catch (Exception ex)
             {
-                rdAirbus320.IsChecked = true;
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else if(airplane == Airplane.Other)
-            {
-                rdOther.IsChecked = true;
-            }
+
+            
         }
 
         private bool IsMealAvailableValid()
         {
             bool result = false;
-            if(rdChicken.IsChecked == false && rdSushi.IsChecked == false && rdSalad.IsChecked == false && rdOtherMeal.IsChecked == false)
+            try
             {
-                result = false;
+                if (rdChicken.IsChecked == false && rdSushi.IsChecked == false && rdSalad.IsChecked == false && rdOtherMeal.IsChecked == false)
+                {
+                    result = false;
+                }
+                else
+                {
+                    result = true;
+                }
+
             }
-            else
+            catch (Exception ex)
             {
-                result = true;
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-
+           
             return result;
         }
         private MealAvailable GetSelectedMealAvilable()
         {
             MealAvailable mealAvailable = MealAvailable.Other;
-            if(rdChicken.IsChecked == true)
+            try
             {
-                mealAvailable = MealAvailable.Chicken;
+                
+                if (rdChicken.IsChecked == true)
+                {
+                    mealAvailable = MealAvailable.Chicken;
+                }
+                else if (rdSushi.IsChecked == true)
+                {
+                    mealAvailable = MealAvailable.Sushi;
+                }
+                else if (rdSalad.IsChecked == true)
+                {
+                    mealAvailable = MealAvailable.Salad;
+                }
+                else if (rdOtherMeal.IsChecked == true)
+                {
+                    mealAvailable = MealAvailable.Other;
+                }
+                return mealAvailable;
             }
-            else if(rdSushi.IsChecked == true)
+            catch (Exception ex)
             {
-                mealAvailable = MealAvailable.Sushi;
-            }
-            else if(rdSalad.IsChecked == true)
-            {
-                mealAvailable = MealAvailable.Salad;
-            }
-            else if(rdOtherMeal.IsChecked == true)
-            {
-                mealAvailable = MealAvailable.Other;
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             return mealAvailable;
+
         }
 
         private void SetRequiredMealAvilable(MealAvailable mealAvilable)
         {
-            if(mealAvilable == MealAvailable.Chicken)
+            try
             {
-                rdChicken.IsChecked = true;
+                if (mealAvilable == MealAvailable.Chicken)
+                {
+                    rdChicken.IsChecked = true;
+                }
+                else if (mealAvilable == MealAvailable.Sushi)
+                {
+                    rdSushi.IsChecked = true;
+                }
+                else if (mealAvilable == MealAvailable.Salad)
+                {
+                    rdSushi.IsChecked = true;
+                }
+                else if (mealAvilable == MealAvailable.Other)
+                {
+                    rdOtherMeal.IsChecked = true;
+                }
             }
-            else if(mealAvilable == MealAvailable.Sushi)
+            catch (Exception ex)
             {
-                rdSushi.IsChecked = true;
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else if(mealAvilable == MealAvailable.Salad)
-            {
-                rdSushi.IsChecked = true;
-            }
-            else if(mealAvilable == MealAvailable.Other)
-            {
-                rdOtherMeal.IsChecked = true;
-            }
+
+            
         }
 
         private bool IsAirlineIdValid(int id)
         {
             bool result = true;
-            var airlineIds = from airline in airlineQueue
-                      select airline.Id;
-            foreach(var aId in airlineIds)
+            try
             {
-                if(id == aId)
+                
+                var airlineIds = from airline in airlineQueue
+                                 select airline.Id;
+                foreach (var aId in airlineIds)
                 {
-                    result = false;
-                    break;
+                    if (id == aId)
+                    {
+                        result = false;
+                        break;
+                    }
                 }
+                //return result;
             }
-
+            catch (Exception ex)
+            {
+               
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+                //return result;
+            }
+          
             return result;
         }
 
-        //private void ctxMenuInsert_Click(object sender, RoutedEventArgs e)
-        //{
-        //    InsertAirlineRecord();
-        //}
-
-        //private void ctxMenuUpdate_Click(object sender, RoutedEventArgs e)
-        //{
-        //    UpdateAirlineRecord();
-        //}
-
-        //private void ctxMenuDelete_Click(object sender, RoutedEventArgs e)
-        //{
-        //    DeleteAirlineRecord();
-        //}
-
+    
         private void InsertAirlineRecord()
         {
-
-
-            if (tbAirlineId.Text == "" || tbAirlineName.Text == "" || IsAirplaneNameValid() == false || tbAvailableSeats.Text == "" || IsMealAvailableValid() == false)
+            try
             {
-                MessageBox.Show("All the fields are mandatory!", "Data Validation Error", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            else
-            {
-                int aId = int.Parse(tbAirlineId.Text);
-                if (IsAirlineIdValid(aId) == false)
+                if (tbAirlineId.Text == "" || tbAirlineName.Text == "" || IsAirplaneNameValid() == false || tbAvailableSeats.Text == "" || IsMealAvailableValid() == false)
                 {
-                    MessageBox.Show("AirlineId cannot be repeated!, Please enter a unique Id for AirlineId. ", "Data Error", MessageBoxButton
-                        .OK, MessageBoxImage.Error);
-                    return;
+                    MessageBox.Show("All the fields are mandatory!", "Data Validation Error", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
+                else
+                {
+                    int aId = int.Parse(tbAirlineId.Text);
+                    if (IsAirlineIdValid(aId) == false)
+                    {
+                        MessageBox.Show("AirlineId cannot be repeated!, Please enter a unique Id for AirlineId. ", "Data Error", MessageBoxButton
+                            .OK, MessageBoxImage.Error);
+                        return;
+                    }
 
-                string aName = tbAirlineName.Text;
-                //string  aAirplane= tbAirplane.Text;
-                Airplane airplane = GetSelectedAirplane();
-                int aSeatsAvailable = int.Parse(tbAvailableSeats.Text);
-                //string meal = tbMealAvailable.Text;
-                MealAvailable mealAvailable = GetSelectedMealAvilable();
-                //MealAvailable aMealAvailable; 
+                    string aName = tbAirlineName.Text;
+                    //string  aAirplane= tbAirplane.Text;
+                    Airplane airplane = GetSelectedAirplane();
+                    int aSeatsAvailable = int.Parse(tbAvailableSeats.Text);
+                    //string meal = tbMealAvailable.Text;
+                    MealAvailable mealAvailable = GetSelectedMealAvilable();
+                    //MealAvailable aMealAvailable; 
 
-                airlineQueue.Enqueue(new Airline(aId, aName, airplane, aSeatsAvailable, mealAvailable));
-                var airlineData = from airline in airlineQueue
-                                  select airline.Id + "\t" + airline.Name + "\t" + airline.Airplane + "\t" + airline.SeatAvailable + "\t" + airline.MealAvailable;
+                    airlineQueue.Enqueue(new Airline(aId, aName, airplane, aSeatsAvailable, mealAvailable));
+                    var airlineData = from airline in airlineQueue
+                                      select airline.Id + "\t" + airline.Name + "\t" + airline.Airplane + "\t" + airline.SeatAvailable + "\t" + airline.MealAvailable;
 
-                lstAirlines.DataContext = airlineData;
+                    lstAirlines.DataContext = airlineData;
+                }
             }
-
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
         }
 
@@ -572,32 +507,81 @@ namespace TakeHomeMidterm
 
         private void ctxMenuInsert_Click(object sender, RoutedEventArgs e)
         {
-            InsertAirlineRecord();
+            try
+            {
+                InsertAirlineRecord();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+           
         }
 
         private void ctxMenuUpdate_Click(object sender, RoutedEventArgs e)
         {
-            UpdateAirlineRecord();
+            try
+            {
+                UpdateAirlineRecord();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+         
         }
 
         private void ctxMenuDelete_Click(object sender, RoutedEventArgs e)
         {
-            DeleteAirlineRecord();
+            try
+            {
+                DeleteAirlineRecord();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+           
         }
 
         private void mnuInsert_Click(object sender, RoutedEventArgs e)
         {
-            InsertAirlineRecord();
+            try
+            {
+                InsertAirlineRecord();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }         
         }
 
         private void mnuUpdate_Click(object sender, RoutedEventArgs e)
         {
-            UpdateAirlineRecord();
+            try
+            {
+                UpdateAirlineRecord();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+         
         }
 
         private void mnuDelete_Click(object sender, RoutedEventArgs e)
         {
-            DeleteAirlineRecord();
+            try
+            {
+                DeleteAirlineRecord();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+         
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -639,44 +623,73 @@ namespace TakeHomeMidterm
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            mnuViewAirlines.IsEnabled = false;
-
-            if(CustomAPI.currentUser.UserStatus == UserStatus.RegularUser)
+            try
             {
-                btnUpdate.IsEnabled = false;
-                btnDelete.IsEnabled = false;
-                btnAddNew.IsEnabled = false;
-                mnuDelete.IsEnabled = false;
-                mnuUpdate.IsEnabled = false;
-                mnuInsert.IsEnabled = false;
-                ctxMenuDelete.IsEnabled = false;
-                ctxMenuUpdate.IsEnabled = false;
-                ctxMenuInsert.IsEnabled = false;
+                mnuViewAirlines.IsEnabled = false;
+
+                if (CustomAPI.currentUser.UserStatus == UserStatus.RegularUser)
+                {
+                    btnUpdate.IsEnabled = false;
+                    btnDelete.IsEnabled = false;
+                    btnAddNew.IsEnabled = false;
+                    mnuDelete.IsEnabled = false;
+                    mnuUpdate.IsEnabled = false;
+                    mnuInsert.IsEnabled = false;
+                    ctxMenuDelete.IsEnabled = false;
+                    ctxMenuUpdate.IsEnabled = false;
+                    ctxMenuInsert.IsEnabled = false;
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+         
         }
 
         private void mnuViewCustomers_Click(object sender, RoutedEventArgs e)
         {
-            
-            CustomerWindow customerWindow = new CustomerWindow();
-            customerWindow.Title = "Customer Information";
-            customerWindow.ShowDialog();
+            try
+            {
+                CustomerWindow customerWindow = new CustomerWindow();
+                customerWindow.Title = "Customer Information";
+                customerWindow.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }     
         }
 
         private void mnuViewFlights_Click(object sender, RoutedEventArgs e)
         {
-            FlightWindow flightWindow = new FlightWindow();
-            flightWindow.Title = "Flight Informtion";
-            flightWindow.ShowDialog();
-           
+            try
+            {
+                FlightWindow flightWindow = new FlightWindow();
+                flightWindow.Title = "Flight Informtion";
+                flightWindow.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+          
         }
 
        
         private void mnuViewPassengers_Click(object sender, RoutedEventArgs e)
         {
-            PassengerWindow passengerWindow = new PassengerWindow();
-            passengerWindow.Title = "Passenger Information";
-            passengerWindow.ShowDialog();
+            try
+            {
+                PassengerWindow passengerWindow = new PassengerWindow();
+                passengerWindow.Title = "Passenger Information";
+                passengerWindow.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+         
         }
     }
 }

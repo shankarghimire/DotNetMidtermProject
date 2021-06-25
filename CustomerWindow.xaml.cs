@@ -32,14 +32,22 @@ namespace TakeHomeMidterm
         //private Logins currentUser;
         public CustomerWindow()
         {
-            InitializeComponent();
-            customerList = customAPIObj.GetCustomerList();
-            //currentUser = DataExchange.currentUser;
-            var custData = from cust in customerList
-                           select cust.Id + "\t" + cust.Name + "\t" + cust.Address + "\t" + cust.Email + "\t" + cust.Phone;
-            
+            try
+            {
+                InitializeComponent();
+                customerList = customAPIObj.GetCustomerList();
+                //currentUser = DataExchange.currentUser;
+                var custData = from cust in customerList
+                               select cust.Id + "\t" + cust.Name + "\t" + cust.Address + "\t" + cust.Email + "\t" + cust.Phone;
 
-            lstCustomers.DataContext = custData;
+
+                lstCustomers.DataContext = custData;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
         }
 
         private void lstCustomers_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -101,202 +109,182 @@ namespace TakeHomeMidterm
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            mnuViewCustomers.IsEnabled = false;
-
-            if (CustomAPI.currentUser.UserStatus == UserStatus.RegularUser)
+            try
             {
-                btnUpdate.IsEnabled = false;
-                btnDelete.IsEnabled = false;
-                btnAddNew.IsEnabled = false;
-                mnuDelete.IsEnabled = false;
-                mnuUpdate.IsEnabled = false;
-                mnuInsert.IsEnabled = false;
-                ctxMenuDelete.IsEnabled = false;
-                ctxMenuUpdate.IsEnabled = false;
-                ctxMenuInsert.IsEnabled = false;
+                mnuViewCustomers.IsEnabled = false;
+
+                if (CustomAPI.currentUser.UserStatus == UserStatus.RegularUser)
+                {
+                    btnUpdate.IsEnabled = false;
+                    btnDelete.IsEnabled = false;
+                    btnAddNew.IsEnabled = false;
+                    mnuDelete.IsEnabled = false;
+                    mnuUpdate.IsEnabled = false;
+                    mnuInsert.IsEnabled = false;
+                    ctxMenuDelete.IsEnabled = false;
+                    ctxMenuUpdate.IsEnabled = false;
+                    ctxMenuInsert.IsEnabled = false;
+                }
             }
-
-
-            //foreach(var c in de.customerList)
-            //{
-            //    MessageBox.Show(c.Name);
-            //}
-            //DateTime now = DateTime.Now;
-            //lblDate.Content = now;
-            //lblUsername.Content = de.currentUser.Username;
-            //if(de.currentUser.SuperUser == 1)
-            //{
-            //    lblUserStatus.Content = "Super User";
-            //}
-            //else
-            //{
-            //    lblUserStatus.Content = "Normal User";
-            //}
-
-            //lblUserStatus.Content = "Super";
-            //  de.currentUser.SuperUser == 1 ? lblUserStatus.Content = "Super User" : lblUserStatus.Content = "Normal User";
-
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
         }
 
         private void btnAddNew_Click(object sender, RoutedEventArgs e)
         {
-            InsertCursomterRecord();
-
-            //if(tbCustomerId.Text == "" || tbCustomerName.Text == "" || tbCustomerAddress.Text == "" ||tbCustomerEmail.Text == "" || tbCustomerPhone.Text == "")
-            //{
-            //    MessageBox.Show("All the fields are mandatory!", "Data Validation Error", MessageBoxButton.OK, MessageBoxImage.Information);
-            //}
-            //else
-            //{
-            //    int cId = int.Parse(tbCustomerId.Text);
-            //    //Calls method to check the customer id is unique or not
-            //    if (!customAPIObj.IsCustomerIdValid(cId))
-            //    {
-            //        MessageBox.Show("CustomerId cannot be repeated! Please, enter a unique CustomerId value.", "Data Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            //        return;
-            //    }
-            //    string cName = tbCustomerName.Text;
-            //    string cAdr = tbCustomerAddress.Text;
-            //    string cEmail = tbCustomerEmail.Text;
-            //    string cPhone = tbCustomerPhone.Text;
-            //    customerList.Add(new Customer(cId, cName, cAdr, cEmail, cPhone ));
-            //    var custData = from cust in customerList
-            //                   select cust.Id + "\t" + cust.Name + "\t" + cust.Address + "\t" + cust.Email + "\t" + cust.Phone;
-
-            //    lstCustomers.DataContext = custData;
-            //}
+            try
+            {
+                InsertCursomterRecord();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+                      
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
-            UpdateCursomterRecord();
-
-            ////bool result = false;
-            //try
-            //{
-            //    int cId = int.Parse(tbCustomerId.Text);
-            //    var customerToUpdate = customerList.Single(cust => cust.Id == cId);
-                
-            //    string cName = tbCustomerName.Text;
-            //    string cAdr = tbCustomerAddress.Text;
-            //    string cEmail = tbCustomerEmail.Text;
-            //    string cPhone = tbCustomerPhone.Text;
-            //    customerToUpdate.Name = cName;
-            //    customerToUpdate.Address = cAdr;
-            //    customerToUpdate.Email = cEmail;
-            //    customerToUpdate.Phone = cPhone;
-
-            //    //de.customerList.Remove(customerToRemove);
-            //    var custData = from cust in customerList
-            //                   select cust.Id + "\t" + cust.Name + "\t" + cust.Address + "\t" + cust.Email + "\t" + cust.Phone;
-
-            //    lstCustomers.DataContext = custData;
-            //    //result = true;
-            //}
-            //catch(Exception ex)
-            //{
-            //    MessageBox.Show(ex.ToString(), "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
-            //    //result = false;
-            //}
-
+            try
+            {
+                UpdateCursomterRecord();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+          
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            DeleteCursomterRecord();
-
-            //try
-            //{
-            //    int cId = int.Parse(tbCustomerId.Text);
-            //    var customerToDelete = customerList.Single(cust => cust.Id == cId);
-
-            //    customerList.Remove(customerToDelete);
-
-            //    //de.customerList.Remove(customerToRemove);
-            //    var custData = from cust in customerList
-            //                   select cust.Id + "\t" + cust.Name + "\t" + cust.Address + "\t" + cust.Email + "\t" + cust.Phone;
-
-            //    //lstCustomers.DataContext = ClearValue();
-            //    //lstCustomers.Items.Clear();
-            //    lstCustomers.DataContext = custData;
-            //    //result = true;
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
-            //    //result = false;
-            //}
-
+            try
+            {
+                DeleteCursomterRecord();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
         }
 
         private void Window_Initialized(object sender, EventArgs e)
         {
-            ShowCurrentUser();
+            try
+            {
+                ShowCurrentUser();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+           
         }
         
 
         private void ShowCurrentUser()
         {
-            //MessageBox.Show(DataExchange.currentUser.Username);
-            DateTime now = DateTime.Now;
-            lblDate.Content = now;
-            lblUsername.Content = "Username : " + DataExchange.currentUser.Username;
-            if (CustomAPI.currentUser.UserStatus == UserStatus.SuperUser)
+            try
             {
-                lblUserStatus.Content = "User Status:" + "Super User";
+                //MessageBox.Show(DataExchange.currentUser.Username);
+                DateTime now = DateTime.Now;
+                lblDate.Content = now;
+                lblUsername.Content = "Username : " + DataExchange.currentUser.Username;
+                if (CustomAPI.currentUser.UserStatus == UserStatus.SuperUser)
+                {
+                    lblUserStatus.Content = "User Status:" + "Super User";
+                }
+                else
+                {
+                    lblUserStatus.Content = "User Status:" + "Normal User";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                lblUserStatus.Content = "User Status:" + "Normal User";
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+           
         }
 
         private void ctxMenuInsert_Click(object sender, RoutedEventArgs e)
         {
-            //MessageBox.Show(" Testing Insert Selected!");
-            InsertCursomterRecord();
+            try
+            {
+                //MessageBox.Show(" Testing Insert Selected!");
+                InsertCursomterRecord();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+           
         }
 
         private void ctxMenuUpdate_Click(object sender, RoutedEventArgs e)
         {
-            //MessageBox.Show("Testing!Update Selected!");
-            UpdateCursomterRecord();
+            try
+            {
+                //MessageBox.Show("Testing!Update Selected!");
+                UpdateCursomterRecord();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
         }
 
         private void ctxMenuDelete_Click(object sender, RoutedEventArgs e)
         {
-            //MessageBox.Show("Delete Selected!");
-            DeleteCursomterRecord();
+            try
+            {
+                //MessageBox.Show("Delete Selected!");
+                DeleteCursomterRecord();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+           
         }
 
         private void InsertCursomterRecord()
         {
-
-            if (tbCustomerId.Text == "" || tbCustomerName.Text == "" || tbCustomerAddress.Text == "" || tbCustomerEmail.Text == "" || tbCustomerPhone.Text == "")
+            try
             {
-                MessageBox.Show("All the fields are mandatory!", "Data Validation Error", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            else
-            {
-                int cId = int.Parse(tbCustomerId.Text);
-                //Calls method to check the customer id is unique or not
-                if (!customAPIObj.IsCustomerIdValid(cId))
+                if (tbCustomerId.Text == "" || tbCustomerName.Text == "" || tbCustomerAddress.Text == "" || tbCustomerEmail.Text == "" || tbCustomerPhone.Text == "")
                 {
-                    MessageBox.Show("CustomerId cannot be repeated! Please, enter a unique CustomerId value.", "Data Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
+                    MessageBox.Show("All the fields are mandatory!", "Data Validation Error", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
-                string cName = tbCustomerName.Text;
-                string cAdr = tbCustomerAddress.Text;
-                string cEmail = tbCustomerEmail.Text;
-                string cPhone = tbCustomerPhone.Text;
-                customerList.Add(new Customer(cId, cName, cAdr, cEmail, cPhone));
-                var custData = from cust in customerList
-                               select cust.Id + "\t" + cust.Name + "\t" + cust.Address + "\t" + cust.Email + "\t" + cust.Phone;
+                else
+                {
+                    int cId = int.Parse(tbCustomerId.Text);
+                    //Calls method to check the customer id is unique or not
+                    if (!customAPIObj.IsCustomerIdValid(cId))
+                    {
+                        MessageBox.Show("CustomerId cannot be repeated! Please, enter a unique CustomerId value.", "Data Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                    string cName = tbCustomerName.Text;
+                    string cAdr = tbCustomerAddress.Text;
+                    string cEmail = tbCustomerEmail.Text;
+                    string cPhone = tbCustomerPhone.Text;
+                    customerList.Add(new Customer(cId, cName, cAdr, cEmail, cPhone));
+                    var custData = from cust in customerList
+                                   select cust.Id + "\t" + cust.Name + "\t" + cust.Address + "\t" + cust.Email + "\t" + cust.Phone;
 
-                lstCustomers.DataContext = custData;
+                    lstCustomers.DataContext = custData;
+                }
             }
-
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        
         }
         private void UpdateCursomterRecord()
         {
@@ -376,17 +364,41 @@ namespace TakeHomeMidterm
 
         private void mnuInsert_Click(object sender, RoutedEventArgs e)
         {
-            InsertCursomterRecord();
+            try
+            {
+                InsertCursomterRecord();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
         }
 
         private void mnuUpdate_Click(object sender, RoutedEventArgs e)
         {
-            UpdateCursomterRecord();
+            try
+            {
+                UpdateCursomterRecord();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+           
         }
 
         private void mnuDelete_Click(object sender, RoutedEventArgs e)
         {
-            DeleteCursomterRecord();
+            try
+            {
+                DeleteCursomterRecord();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+           
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -430,23 +442,47 @@ namespace TakeHomeMidterm
 
         private void mnuViewFlights_Click(object sender, RoutedEventArgs e)
         {
-            FlightWindow flightWindow = new FlightWindow();
-            flightWindow.Title = "Flight Information";
-            flightWindow.ShowDialog();
+            try
+            {
+                FlightWindow flightWindow = new FlightWindow();
+                flightWindow.Title = "Flight Information";
+                flightWindow.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+         
         }
 
         private void mnuViewAirlines_Click(object sender, RoutedEventArgs e)
         {
-            AirlineWindow airlineWindow = new AirlineWindow();
-            airlineWindow.Title = "Airline Information";
-            airlineWindow.ShowDialog();
+            try
+            {
+                AirlineWindow airlineWindow = new AirlineWindow();
+                airlineWindow.Title = "Airline Information";
+                airlineWindow.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+         
         }
 
         private void mnuViewPassengers_Click(object sender, RoutedEventArgs e)
         {
-            PassengerWindow passengerWindow = new PassengerWindow();
-            passengerWindow.Title = "Passenger Information";
-            passengerWindow.ShowDialog();
+            try
+            {
+                PassengerWindow passengerWindow = new PassengerWindow();
+                passengerWindow.Title = "Passenger Information";
+                passengerWindow.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+         
         }
     }
 }

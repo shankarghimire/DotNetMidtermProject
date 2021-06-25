@@ -28,20 +28,28 @@ namespace TakeHomeMidterm
 
         public PassengerWindow()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+
+                customerList = customAPIObj.GetCustomerList();
+                flightList = customAPIObj.GetFlightList();
+
+                passengerStack = customAPIObj.GetPassengerStack();
+
+
+                //List<Passenger> topPassenger = new List<Passenger>();
+                //topPassenger.Add(passengerStack.Peek());
+                var passengerData = from passenger in passengerStack
+                                    select passenger.Id + "\t" + passenger.CustomerId + "\t" + passenger.FlightId;
+
+                lstPassengers.DataContext = passengerData;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             
-            customerList = customAPIObj.GetCustomerList();
-            flightList = customAPIObj.GetFlightList();
-
-            passengerStack = customAPIObj.GetPassengerStack();
-
-
-            //List<Passenger> topPassenger = new List<Passenger>();
-            //topPassenger.Add(passengerStack.Peek());
-            var passengerData = from passenger in passengerStack
-                                select passenger.Id + "\t" + passenger.CustomerId + "\t" + passenger.FlightId ;
-
-            lstPassengers.DataContext = passengerData;
         }
 
         private void mnuFile_Click(object sender, RoutedEventArgs e)
@@ -51,142 +59,69 @@ namespace TakeHomeMidterm
 
         private void lstPassengers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int i = lstPassengers.SelectedIndex;
-            //MessageBox.Show("i=" + i);
-            //MessageBox.Show(i.ToString());
-            if( i == 0)
+            try
             {
-                List<Passenger> topPassenger = new List<Passenger>();
-                topPassenger.Add(passengerStack.Peek());
-
-                foreach (var p in topPassenger)
+                int i = lstPassengers.SelectedIndex;
+                //MessageBox.Show("i=" + i);
+                //MessageBox.Show(i.ToString());
+                if (i == 0)
                 {
-                    tbPassengerId.Text = p.Id.ToString();
-                    tbCustomerId.Text = p.CustomerId.ToString();
-                    tbFlightId.Text = p.FlightId.ToString();
+                    List<Passenger> topPassenger = new List<Passenger>();
+                    topPassenger.Add(passengerStack.Peek());
+
+                    foreach (var p in topPassenger)
+                    {
+                        tbPassengerId.Text = p.Id.ToString();
+                        tbCustomerId.Text = p.CustomerId.ToString();
+                        tbFlightId.Text = p.FlightId.ToString();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("You can only load the top-stack element on to the textbox.", "Stack Information", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("You can only load the top-stack element on to the textbox.","Stack Information",MessageBoxButton.OK,MessageBoxImage.Information);
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-           
+         
         }
 
         private void btnAddNew_Click(object sender, RoutedEventArgs e)
         {
-            InsertPassengerRecord();
-
-            //try
-            //{
-
-            //    if (tbPassengerId.Text == "" || tbCustomerId.Text == "" || tbFlightId.Text == "" )
-            //    {
-            //        MessageBox.Show("All the fields are mandatory!", "Data Validation Error", MessageBoxButton.OK, MessageBoxImage.Information);
-            //    }
-            //    else
-            //    {
-            //        int pId = int.Parse(tbPassengerId.Text);
-            //        if (CheckPassengerId(pId))
-            //        {
-            //            MessageBox.Show("Duplicate Passenger Id is not allowed! Please, Enter the unique Passenger Id.", "Data Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            //            tbFlightId.Focus();
-            //            return;
-            //        }
-
-            //        int cId = int.Parse(tbCustomerId.Text);
-            //        if (!CheckCustomerId(cId))
-            //        {
-            //            MessageBox.Show("Invalid Customer Id!, Please, check the Customer Data!", "Data Error!", MessageBoxButton.OK, MessageBoxImage.Error);
-            //            //tbAirlineId.Focus();
-            //            return;
-
-            //        }
-
-
-            //        int fId = int.Parse(tbFlightId.Text);
-            //        if (!CheckFlightId(fId))
-            //        {
-            //            MessageBox.Show("Invalid Flight Id!, Please, check the Flight Data!", "Data Error!", MessageBoxButton.OK, MessageBoxImage.Error);
-            //            //tbAirlineId.Focus();
-            //            return;
-
-            //        }
-                   
-                 
-            //        passengerStack.Push(new Passenger(pId, cId, fId));
-            //        var passengerData = from passenger in passengerStack
-            //                         select passenger.Id + "\t" + passenger.CustomerId + "\t" + passenger.FlightId;
-
-            //        lstPassengers.DataContext = passengerData;
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.ToString(), "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
-            //}
+            try
+            {
+                InsertPassengerRecord();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }                      
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
-            UpdatePassengerRecord();
-
-            //try
-            //{
-            //    int pId = int.Parse(tbPassengerId.Text);
-            //    var passengerToUpdate = passengerStack.Single(passenger => passenger.Id == pId);
-
-            //    int customerId = int.Parse(tbCustomerId.Text);
-            //    int flightId = int.Parse(tbFlightId.Text);
-
-            //    passengerToUpdate.CustomerId = customerId;
-            //    passengerToUpdate.FlightId = flightId;
-
-            //    var passengerData = from passenger in passengerStack
-            //                        select passenger.Id + "\t" + passenger.CustomerId + "\t" + passenger.FlightId;
-
-            //    lstPassengers.DataContext = passengerData;
-
-
-            //    //result = true;
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.ToString(), "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
-            //    //result = false;
-            //}
+            try
+            {
+                UpdatePassengerRecord();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }           
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            DeletePassengerRecord();
-
-            //try
-            //{
-            //    //int fId = int.Parse(tbFlightId.Text);
-            //    //var flightToDelete = flightList.Single(flight => flight.Id == fId);
-            //    //flightList.Remove(flightToDelete);
-            //    passengerStack.Pop();
-            //    var passengerData = from passenger in passengerStack
-            //                        select passenger.Id + "\t" + passenger.CustomerId + "\t" + passenger.FlightId;
-
-
-            //    lstPassengers.DataContext = passengerData;
-            //    tbPassengerId.Text = "";
-            //    tbCustomerId.Text = "";
-            //    tbFlightId.Text = "";
-
-            //    //var flightData = from flight in flightList
-            //    //                 select flight.Id + "\t" + flight.AirlineId + "\t" + flight.DepartureCity + "\t" + flight.DestincationCity + "\t" + flight.DepartureDate + "\t" + flight.FlightTime;
-
-            //    //lstFlights.DataContext = flightData;
-            //    //result = true;
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.ToString(), "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
-            //    //result = false;
-            //}
+            try
+            {
+                DeletePassengerRecord();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }           
         }
 
         private void mnuQuit_Click(object sender, RoutedEventArgs e)
@@ -211,69 +146,113 @@ namespace TakeHomeMidterm
         private bool CheckPassengerId(int id)
         {
             bool result = false;
-
-            //List<Flight> tempAirlineList = deObj.GetAirlineList();
-            var passengerId = from passenger in passengerStack
-                           select passenger.Id;
-            foreach (var pId in passengerId)
+            try
             {
-                if (id == pId)
+                //List<Flight> tempAirlineList = deObj.GetAirlineList();
+                var passengerId = from passenger in passengerStack
+                                  select passenger.Id;
+                foreach (var pId in passengerId)
                 {
-                    result = true;
-                    break;
+                    if (id == pId)
+                    {
+                        result = true;
+                        break;
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }          
             return result;
         }
 
         private bool CheckCustomerId(int id)
         {
             bool result = false;
-
-            //List<Flight> tempAirlineList = deObj.GetAirlineList();
-            var customerId = from customer in customerList
-                           select customer.Id;
-            foreach (var cId in customerId)
+            try
             {
-                if (id == cId)
+                //List<Flight> tempAirlineList = deObj.GetAirlineList();
+                var customerId = from customer in customerList
+                                 select customer.Id;
+                foreach (var cId in customerId)
                 {
-                    result = true;
-                    break;
+                    if (id == cId)
+                    {
+                        result = true;
+                        break;
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+         
             return result;
         }
         private bool CheckFlightId(int id)
         {
             bool result = false;
-
-            //List<Flight> tempAirlineList = deObj.GetAirlineList();
-            var flightId = from flight in flightList
-                           select flight.Id;
-            foreach (var fId in flightId)
+            try
             {
-                if (id == fId)
+                //List<Flight> tempAirlineList = deObj.GetAirlineList();
+                var flightId = from flight in flightList
+                               select flight.Id;
+                foreach (var fId in flightId)
                 {
-                    result = true;
-                    break;
+                    if (id == fId)
+                    {
+                        result = true;
+                        break;
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+           
             return result;
         }
 
         private void ctxMenuInsert_Click(object sender, RoutedEventArgs e)
         {
-            InsertPassengerRecord();
+            try
+            {
+                InsertPassengerRecord();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+           
         }
 
         private void ctxMenuUpdate_Click(object sender, RoutedEventArgs e)
         {
-            UpdatePassengerRecord();
+            try
+            {
+                UpdatePassengerRecord();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
         }
 
         private void ctxMenuDelete_Click(object sender, RoutedEventArgs e)
         {
-            DeletePassengerRecord();
+            try
+            {
+                DeletePassengerRecord();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+          
         }
 
         private void InsertPassengerRecord()
@@ -399,17 +378,41 @@ namespace TakeHomeMidterm
 
         private void mnuInsert_Click(object sender, RoutedEventArgs e)
         {
-            InsertPassengerRecord();
+            try
+            {
+                InsertPassengerRecord();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
         }
 
         private void mnuUpdate_Click(object sender, RoutedEventArgs e)
         {
-            UpdatePassengerRecord();
+            try
+            {
+                UpdatePassengerRecord();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+           
         }
 
         private void mnuDelete_Click(object sender, RoutedEventArgs e)
         {
-            DeletePassengerRecord();
+            try
+            {
+                DeletePassengerRecord();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -451,41 +454,74 @@ namespace TakeHomeMidterm
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            mnuViewPassengers.IsEnabled = false;
-
-            if (CustomAPI.currentUser.UserStatus == UserStatus.RegularUser)
+            try
             {
-                btnUpdate.IsEnabled = false;
-                btnDelete.IsEnabled = false;
-                btnAddNew.IsEnabled = false;
-                mnuDelete.IsEnabled = false;
-                mnuUpdate.IsEnabled = false;
-                mnuInsert.IsEnabled = false;
-                ctxMenuDelete.IsEnabled = false;
-                ctxMenuUpdate.IsEnabled = false;
-                ctxMenuInsert.IsEnabled = false;
+                mnuViewPassengers.IsEnabled = false;
+
+                if (CustomAPI.currentUser.UserStatus == UserStatus.RegularUser)
+                {
+                    btnUpdate.IsEnabled = false;
+                    btnDelete.IsEnabled = false;
+                    btnAddNew.IsEnabled = false;
+                    mnuDelete.IsEnabled = false;
+                    mnuUpdate.IsEnabled = false;
+                    mnuInsert.IsEnabled = false;
+                    ctxMenuDelete.IsEnabled = false;
+                    ctxMenuUpdate.IsEnabled = false;
+                    ctxMenuInsert.IsEnabled = false;
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+          
         }
 
         private void mnuViewCustomers_Click(object sender, RoutedEventArgs e)
         {
-            CustomerWindow customerWindow = new CustomerWindow();
-            customerWindow.Title = "Customer Information";
-            customerWindow.ShowDialog();
+            try
+            {
+                CustomerWindow customerWindow = new CustomerWindow();
+                customerWindow.Title = "Customer Information";
+                customerWindow.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+           
         }
 
         private void mnuViewFlights_Click(object sender, RoutedEventArgs e)
         {
-            FlightWindow flightWindow = new FlightWindow();
-            flightWindow.Title = "Flight Information";
-            flightWindow.ShowDialog();
+            try
+            {
+                FlightWindow flightWindow = new FlightWindow();
+                flightWindow.Title = "Flight Information";
+                flightWindow.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+          
         }
 
         private void mnuViewAirlines_Click(object sender, RoutedEventArgs e)
         {
-            AirlineWindow airlineWindow = new AirlineWindow();
-            airlineWindow.Title = "Airline Information";
-            airlineWindow.ShowDialog();
+            try
+            {
+                AirlineWindow airlineWindow = new AirlineWindow();
+                airlineWindow.Title = "Airline Information";
+                airlineWindow.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        
         }
     }
 }
